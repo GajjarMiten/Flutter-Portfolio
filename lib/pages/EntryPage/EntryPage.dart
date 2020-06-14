@@ -4,7 +4,7 @@ import 'package:ptf/components/buttons/ContactMeButton.dart';
 import 'package:ptf/helper/CustomTheme.dart';
 import 'package:ptf/helper/particles/particle.dart';
 
-import 'EntryTextPage.dart';
+import '../../components/entryPage/EntryTextPage.dart';
 
 class EntryPage extends StatefulWidget {
   @override

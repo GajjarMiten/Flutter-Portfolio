@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ptf/pages/AboutPage/about.dart';
 import 'package:ptf/pages/EntryPage/EntryPage.dart';
+import 'package:ptf/pages/contactPage/contactPage.dart';
 import 'package:ptf/pages/skillPage/skills.dart';
+import 'package:ptf/pages/workpage/workPage.dart';
 import 'package:ptf/provider/ScrollProvider.dart';
 
 class HomeView extends StatefulWidget {
@@ -33,8 +35,8 @@ class _HomeViewState extends State<HomeView> {
             EntryPage(),
             AboutPage(),
             SkillPage(),
-            Container(height: size.height, width: size.width),
-            Container(height: size.height, width: size.width),
+            WorkPage(),
+            ContactPage(),
           ],
         ),
       ),

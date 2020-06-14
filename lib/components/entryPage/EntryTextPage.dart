@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
-import 'HoverText.dart';
-import 'latter.dart';
+import '../AnimatedString/HoverText.dart';
+import '../AnimatedString/latter.dart';
 
 class MyText extends StatefulWidget {
   @override

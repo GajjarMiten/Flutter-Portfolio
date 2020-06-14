@@ -28,7 +28,7 @@ class _SkillButtonState extends State<SkillButton>
 
   double height = 50;
   double width = 120;
-  double fontSize = 20;
+  double fontSize = 15;
 
   @override
   void initState() {
@@ -63,9 +63,11 @@ class _SkillButtonState extends State<SkillButton>
         if (sizingInformation.isDesktop) {
           height = 50;
           width = 120;
+          fontSize = 15;
         } else if (sizingInformation.isTablet) {
           height = 40;
-          width = 100;
+          width = 110;
+          fontSize = 13;
         } else {
           height = 40;
           width = 100;

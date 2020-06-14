@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:ptf/components/SkillPage/SkillCard.dart';
 import 'package:ptf/helper/CustomTheme.dart';
 import 'package:ptf/helper/particles/particle.dart';
-import 'package:ptf/pages/EntryPage/latter.dart';
+import 'package:ptf/components/AnimatedString/latter.dart';
 import 'package:ptf/provider/ScrollProvider.dart';
 
 import 'FlipCard/FlipCard.dart';
@@ -86,10 +86,6 @@ class _SkillPageState extends State<SkillPage>
       padding: const EdgeInsets.only(
         left: 20,
       ),
-      // constraints: BoxConstraints(
-      //   minHeight: size.height,
-      //   minWidth: size.width,
-      // ),
       height: size.height,
       width: size.width,
       child: Stack(
@@ -100,7 +96,7 @@ class _SkillPageState extends State<SkillPage>
             child: Align(
               alignment: Alignment(1, 0.5),
               child: Container(
-                height: MediaQuery.of(context).size.height * 0.9,
+                margin: const EdgeInsets.only(top: 35.0),
                 width: MediaQuery.of(context).size.width * 0.5,
                 child: Column(
                   children: [
@@ -144,7 +140,7 @@ class _SkillPageState extends State<SkillPage>
                       height: 30,
                     ),
                     Container(
-                      alignment: Alignment.centerLeft,
+                      alignment: Alignment.center,
                       width: size.width * 0.35,
                       child: AnimatedBuilder(
                         animation: textAnimController,
@@ -167,7 +163,7 @@ class _SkillPageState extends State<SkillPage>
                             visibleString,
                             style: GoogleFonts.acme(
                               color: customTheme.textColor,
-                              fontSize: 20,
+                              fontSize: 18,
                             ),
                           );
                         },

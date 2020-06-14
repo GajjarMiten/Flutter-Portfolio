@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:ptf/helper/CustomTheme.dart';
 import 'package:ptf/helper/particles/particle.dart';
-import 'package:ptf/pages/EntryPage/latter.dart';
+import 'package:ptf/components/AnimatedString/latter.dart';
 import 'package:ptf/provider/ScrollProvider.dart';
 
 class AboutPage extends StatefulWidget {

@@ -4,7 +4,8 @@ import 'package:responsive_builder/responsive_builder.dart';
 
 class Word extends StatefulWidget {
   final String word;
-  Word(this.word);
+  final double duration;
+  Word(this.word, {this.duration});
   @override
   _WordState createState() => _WordState();
 }
@@ -44,10 +45,9 @@ class _WordState extends State<Word> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return ResponsiveBuilder(
       builder: (context, sizingInformation) {
-        if(sizingInformation.isDesktop ){
+        if (sizingInformation.isDesktop) {
           fontsize = 60;
-        }
-        else if ( sizingInformation.isTablet)
+        } else if (sizingInformation.isTablet)
           fontsize = 50;
         else
           fontsize = 35;

@@ -2,7 +2,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:ptf/pages/skillPage/data/SkillObjects.dart';
 
-
 class ChartCard extends StatefulWidget {
   @override
   _ChartCardState createState() => _ChartCardState();
@@ -39,12 +38,10 @@ class _ChartCardState extends State<ChartCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(40),
       decoration: BoxDecoration(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(20),
       ),
-      padding: const EdgeInsets.all(15),
       child: BarChart(
         BarChartData(
           borderData: FlBorderData(show: false),

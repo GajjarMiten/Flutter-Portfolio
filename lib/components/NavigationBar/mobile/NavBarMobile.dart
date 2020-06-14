@@ -30,7 +30,7 @@ class _NavBarMobState extends State<NavBarMob> {
           Row(
             children: [
               MyIconButton(
-                icon: AntDesign.home,
+                icon: FlutterIcons.home_ant,
                 name: "HOME",
                 color: (scrollController.getCurrentIndex == 0)
                     ? Theme.of(context).accentColor
