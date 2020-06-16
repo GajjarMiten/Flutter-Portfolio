@@ -21,7 +21,7 @@ class _HomeViewState extends State<HomeView> {
     final scrollController = Provider.of<ScrollControllerProvider>(context);
     if (size.width < 950) {
       setState(() {
-        padding = EdgeInsets.only(top: 65);
+        padding = EdgeInsets.only(top: 0);
       });
     } else {
       padding = EdgeInsets.only(left: 65);
@@ -29,6 +29,7 @@ class _HomeViewState extends State<HomeView> {
     return Container(
       margin: padding,
       child: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
         controller: scrollController.getController,
         child: Column(
           children: [

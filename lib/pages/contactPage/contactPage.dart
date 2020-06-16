@@ -39,12 +39,12 @@ class _ContactPageState extends State<ContactPage>
   void initState() {
     super.initState();
     tweenAnimController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 1200));
+        vsync: this, duration: Duration(milliseconds: 2000));
     tweenAnimation = CurvedAnimation(
         parent: tweenAnimController, curve: Curves.easeOutQuart);
 
     tweenAnimController2 = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 2000));
+        vsync: this, duration: Duration(milliseconds: 2300));
     tweenAnimation2 = CurvedAnimation(
         parent: tweenAnimController2, curve: Curves.easeOutQuart);
 
@@ -82,76 +82,75 @@ class _ContactPageState extends State<ContactPage>
         tweenAnimController2.forward();
       }
     });
+    return ResponsiveBuilder(
+      builder: (context, sizingInformation) {
+        double fSize = 18;
+        if (sizingInformation.isDesktop || sizingInformation.isTablet) {
+          fSize = 18;
+        } else if (sizingInformation.isMobile) {
+          fSize = 15;
+        }
 
-    return Container(
-      alignment: Alignment.center,
-      height: size.height,
-      width: size.width,
-      child: Stack(
-        children: [
-          Particle(size.height, size.width),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: SineWave(
-              size: Size(size.width, 130),
-              xOffset: 0,
-              yOffset: 0,
-              color: Colors.red,
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Opacity(
-              opacity: 0.9,
-              child: CosWave(
-                size: Size(size.width, 130),
-                xOffset: 45,
-                yOffset: -5,
+        return Container(
+          alignment: Alignment.center,
+          height: size.height,
+          width: size.width,
+          child: Stack(
+            children: [
+              Particle(size.height, size.width),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: SineWave(
+                  size: Size(size.width, 130),
+                  xOffset: 0,
+                  yOffset: 0,
+                  color: Colors.red,
+                ),
               ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: Align(
-              alignment: Alignment.center,
-              child: FadeTransition(
-                opacity: _animation,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SlideTransition(
-                      position: tweenAnimation.drive(tween),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Word("C"),
-                          Word("o"),
-                          Word("n"),
-                          Word("t"),
-                          Word("a"),
-                          Word("c"),
-                          Word("t"),
-                          Word(" "),
-                          Word("m"),
-                          Word("e"),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    ResponsiveBuilder(
-                      builder: (context, sizingInformation) {
-                        double fSize = 18;
-                        if (sizingInformation.isDesktop ||
-                            sizingInformation.isTablet) {
-                          fSize = 18;
-                        } else if (sizingInformation.isMobile) {
-                          fSize = 15;
-                        }
-                        return SlideTransition(
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Opacity(
+                  opacity: 0.9,
+                  child: CosWave(
+                    size: Size(size.width, 130),
+                    xOffset: 45,
+                    yOffset: -5,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: FadeTransition(
+                    opacity: _animation,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SlideTransition(
+                          position: tweenAnimation.drive(tween),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Word("C"),
+                              Word("o"),
+                              Word("n"),
+                              Word("t"),
+                              Word("a"),
+                              Word("c"),
+                              Word("t"),
+                              Word(" "),
+                              Word("m"),
+                              Word("e"),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 25,
+                        ),
+                        SlideTransition(
                           position: tweenAnimation2.drive(tween),
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.5,
@@ -169,36 +168,37 @@ class _ContactPageState extends State<ContactPage>
                                 ],
                               ),
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.acme(
+                              style: TextStyle(
+                                fontFamily: "Acme",
                                 color: customTheme.textColor,
                                 fontSize: fSize,
                               ),
                             ),
                           ),
-                        );
-                      },
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        ChangeNotifierProvider<EmailData>(
+                          create: (context) => EmailData(),
+                          child: ContactForm(),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    ChangeNotifierProvider<EmailData>(
-                      create: (context) => EmailData(),
-                      child: ContactForm(),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 15.0),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Footer(),
+                ),
+              ),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 15.0),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Footer(),
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 

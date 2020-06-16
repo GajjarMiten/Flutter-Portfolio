@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:ptf/components/SkillPage/SkillCard.dart';
 import 'package:ptf/helper/CustomTheme.dart';
 import 'package:ptf/helper/particles/particle.dart';
 import 'package:ptf/components/AnimatedString/latter.dart';
 import 'package:ptf/provider/ScrollProvider.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 import 'FlipCard/FlipCard.dart';
 import 'SkillChart/Chartcard.dart';
@@ -83,111 +83,198 @@ class _SkillPageState extends State<SkillPage>
       }
     });
     return Container(
-      padding: const EdgeInsets.only(
-        left: 20,
-      ),
       height: size.height,
       width: size.width,
       child: Stack(
         children: [
           Particle(size.height, size.width),
-          FadeTransition(
-            opacity: _animation,
-            child: Align(
-              alignment: Alignment(1, 0.5),
-              child: Container(
-                margin: const EdgeInsets.only(top: 35.0),
-                width: MediaQuery.of(context).size.width * 0.5,
-                child: Column(
-                  children: [
-                    SlideTransition(
-                      position: tweenAnimation.drive(titleTween),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Word("S"),
-                              Word("k"),
-                              Word("i"),
-                              Word("l"),
-                              Word("l"),
-                              Word("s"),
-                              Word(" "),
-                              Word("&"),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Word("E"),
-                              Word("x"),
-                              Word("p"),
-                              Word("e"),
-                              Word("r"),
-                              Word("i"),
-                              Word("e"),
-                              Word("n"),
-                              Word("c"),
-                              Word("e"),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      width: size.width * 0.35,
-                      child: AnimatedBuilder(
-                        animation: textAnimController,
-                        builder: (BuildContext context, Widget child) {
-                          if (textAnim.value == 0) {
-                            visibleString = "";
-                          } else if (textAnim.value > myAbout.length) {
-                            if ((textAnim.value - myAbout.length) % 2 == 0) {
-                              visibleString =
-                                  myAbout.substring(0, myAbout.length) + '_';
-                            } else {
-                              visibleString =
-                                  myAbout.substring(0, myAbout.length);
-                            }
-                          } else {
-                            visibleString =
-                                myAbout.substring(0, textAnim.value) + '_';
-                          }
-                          return Text(
-                            visibleString,
-                            style: GoogleFonts.acme(
-                              color: customTheme.textColor,
-                              fontSize: 18,
+          ResponsiveBuilder(
+            builder: (context, sizingInformation) {
+              if (sizingInformation.isDesktop || sizingInformation.isTablet) {
+                return FadeTransition(
+                  opacity: _animation,
+                  child: Stack(
+                    alignment: Alignment.centerLeft,
+                    children: [
+                      buildSkillContainer(context, size),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 105.0),
+                          child: Container(
+                            width: size.width * 0.6,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SlideTransition(
+                                  position: tweenAnimation.drive(titleTween),
+                                  child: buildTitleColumn(),
+                                ),
+                                buildResponsiveBuilder(size),
+                              ],
                             ),
-                          );
-                        },
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.6,
-              width: MediaQuery.of(context).size.width * 0.5,
-              child: FlipCard(
-                flipOnHover: true,
-                front: SkillCard(),
-                back: ChartCard(),
-              ),
-            ),
+                    ],
+                  ),
+                );
+              } else {
+                return Padding(
+                  padding: const EdgeInsets.only(
+                      top: 70, bottom: 25, left: 10, right: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      buildTitleColumn(),
+                      SizedBox(
+                        height: 17,
+                      ),
+                      buildSkillContainer(context, size),
+                      SizedBox(
+                        height: 17,
+                      ),
+                      buildResponsiveBuilder(size),
+                    ],
+                  ),
+                );
+              }
+            },
           ),
         ],
       ),
+    );
+  }
+
+  Column buildTitleColumn() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Word("S"),
+            Word("k"),
+            Word("i"),
+            Word("l"),
+            Word("l"),
+            Word("s"),
+            Word(" "),
+            Word("&"),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Word("E"),
+            Word("x"),
+            Word("p"),
+            Word("e"),
+            Word("r"),
+            Word("i"),
+            Word("e"),
+            Word("n"),
+            Word("c"),
+            Word("e"),
+          ],
+        ),
+      ],
+    );
+  }
+
+  buildSkillContainer(BuildContext context, Size size) {
+    return ResponsiveBuilder(
+      builder: (context, sizingInformation) {
+        if (sizingInformation.isMobile) {
+          return Container(
+            height: size.height*0.45,
+            width: size.width-40,
+            child: FlipCard(
+              flipOnHover: true,
+              front: SkillCard(),
+              back: ChartCard(),
+            ),
+          );
+        } else {
+          return Container(
+            height: size.height * 0.6,
+            width: size.width * 0.5,
+            child: FlipCard(
+              flipOnHover: true,
+              front: SkillCard(),
+              back: ChartCard(),
+            ),
+          );
+        }
+      },
+    );
+  }
+
+  ResponsiveBuilder buildResponsiveBuilder(Size size) {
+    return ResponsiveBuilder(
+      builder: (context, sizingInformation) {
+        double fSize = 17;
+
+        if (sizingInformation.isMobile) {
+          return Container(
+            alignment: Alignment.center,
+            width: size.width,
+            child: AnimatedBuilder(
+              animation: textAnimController,
+              builder: (BuildContext context, Widget child) {
+                if (textAnim.value == 0) {
+                  visibleString = "";
+                } else if (textAnim.value > myAbout.length) {
+                  if ((textAnim.value - myAbout.length) % 2 == 0) {
+                    visibleString = myAbout.substring(0, myAbout.length) + '_';
+                  } else {
+                    visibleString = myAbout.substring(0, myAbout.length);
+                  }
+                } else {
+                  visibleString = myAbout.substring(0, textAnim.value) + '_';
+                }
+                return Text(
+                  visibleString,
+                  style: TextStyle(
+                    fontFamily: "Acme",
+                    color: customTheme.textColor,
+                    fontSize: fSize,
+                  ),
+                );
+              },
+            ),
+          );
+        } else {
+          return Container(
+            height: size.height * 0.6,
+            width: size.width * 0.35,
+            child: AnimatedBuilder(
+              animation: textAnimController,
+              builder: (BuildContext context, Widget child) {
+                if (textAnim.value == 0) {
+                  visibleString = "";
+                } else if (textAnim.value > myAbout.length) {
+                  if ((textAnim.value - myAbout.length) % 2 == 0) {
+                    visibleString = myAbout.substring(0, myAbout.length) + '_';
+                  } else {
+                    visibleString = myAbout.substring(0, myAbout.length);
+                  }
+                } else {
+                  visibleString = myAbout.substring(0, textAnim.value) + '_';
+                }
+                return Text(
+                  visibleString,
+                  style: TextStyle(
+                    fontFamily: "Acme",
+                    color: customTheme.textColor,
+                    fontSize: fSize,
+                  ),
+                );
+              },
+            ),
+          );
+        }
+      },
     );
   }
 

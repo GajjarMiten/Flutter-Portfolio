@@ -14,6 +14,10 @@ class MyText extends StatefulWidget {
 class _MyTextState extends State<MyText> {
   Size size = Size(500, 300);
 
+  final String line1 = "Hi,";
+  final String line2 = "I'm Miten,";
+  final String line3 = "Flutter developer,";
+
   @override
   Widget build(BuildContext context) {
     return ResponsiveBuilder(
@@ -23,7 +27,7 @@ class _MyTextState extends State<MyText> {
         } else if (sizingInformation.isTablet) {
           size = Size(500, 350);
         } else if (sizingInformation.isMobile) {
-          size = Size(370, 300);
+          size = Size(350, 300);
         }
         return ClipRRect(
           child: BackdropFilter(
@@ -42,49 +46,33 @@ class _MyTextState extends State<MyText> {
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Word("H"),
-                            Word("i"),
-                            Word(","),
-                          ],
+                          children: List.generate(
+                            line1.length,
+                            (index) => Word(
+                              line1[index],
+                              duration: (index + 1).toDouble(),
+                            ),
+                          ).toList(),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Word("I"),
-                            Word("'"),
-                            Word("m"),
-                            Word(" "),
-                            Word("M"),
-                            Word("i"),
-                            Word("t"),
-                            Word("e"),
-                            Word("n"),
-                            Word(","),
-                          ],
+                          children: List.generate(
+                            line2.length,
+                            (index) => Word(
+                              line2[index],
+                              duration: (index + 3).toDouble(),
+                            ),
+                          ).toList(),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Word("F"),
-                            Word("l"),
-                            Word("u"),
-                            Word("t"),
-                            Word("t"),
-                            Word("e"),
-                            Word("r"),
-                            Word(" "),
-                            Word("d"),
-                            Word("e"),
-                            Word("v"),
-                            Word("e"),
-                            Word("l"),
-                            Word("o"),
-                            Word("p"),
-                            Word("e"),
-                            Word("r"),
-                            Word("."),
-                          ],
+                          children: List.generate(
+                            line3.length,
+                            (index) => Word(
+                              line3[index],
+                              duration: (index + 10).toDouble(),
+                            ),
+                          ).toList(),
                         ),
                       ],
                     ),

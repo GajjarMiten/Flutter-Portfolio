@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:ptf/components/buttons/ContactMeButton.dart';
 import 'package:ptf/helper/CustomTheme.dart';
 import 'package:ptf/helper/particles/particle.dart';
@@ -22,38 +21,45 @@ class _EntryPageState extends State<EntryPage> with customTheme {
       child: Stack(
         children: [
           Particle(size.height, size.width),
-          Align(
-            alignment: Alignment(0, -0.9),
-            child: RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: "import ",
-                    style: GoogleFonts.pacifico(
-                      fontSize: 20,
-                      color: customTheme.colorList.first,
-                      wordSpacing: 10,
-                    ),
+          Padding(
+            padding: const EdgeInsets.only(top: 65.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(width: size.width,),
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "import ",
+                        style: TextStyle(
+                          fontFamily: "Pacifico",
+                          fontSize: 20,
+                          color: customTheme.colorList.first,
+                          wordSpacing: 10,
+                        ),
+                      ),
+                      TextSpan(
+                        text: "'package:flutter/MyPortfolio.dart'\n",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: "Kalam",
+                          color: customTheme.colorList.last,
+                          wordSpacing: 10,
+                        ),
+                      ),
+                    ],
                   ),
-                  TextSpan(
-                    text: "'package:flutter/MyPortfolio.dart'\n",
-                    style: GoogleFonts.kalam(
-                      fontSize: 20,
-                      color: customTheme.colorList.last,
-                      wordSpacing: 10,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+                SizedBox(height: 20,),
+                MyText(),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: ContactMe(),
+                ),
+              ],
             ),
-          ),
-          Align(
-            alignment: Alignment(0, -0.3),
-            child: MyText(),
-          ),
-          Align(
-            alignment: Alignment(0, 0.6),
-            child: ContactMe(),
           ),
         ],
       ),

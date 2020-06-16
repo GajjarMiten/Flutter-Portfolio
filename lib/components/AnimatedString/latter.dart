@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class Word extends StatefulWidget {
@@ -18,6 +17,9 @@ class _WordState extends State<Word> with SingleTickerProviderStateMixin {
 
   double fontsize = 50;
 
+  double opacity = 0;
+  double duration = 0;
+
   @override
   void initState() {
     super.initState();
@@ -33,6 +35,12 @@ class _WordState extends State<Word> with SingleTickerProviderStateMixin {
       curve: Curves.elasticInOut,
       reverseCurve: Curves.elasticInOut,
     );
+    duration = (widget.duration) ?? 1;
+    Future.delayed(Duration(milliseconds: 100 * duration.toInt()), () {
+      setState(() {
+        opacity = 1;
+      });
+    });
   }
 
   @override
@@ -50,7 +58,7 @@ class _WordState extends State<Word> with SingleTickerProviderStateMixin {
         } else if (sizingInformation.isTablet)
           fontsize = 50;
         else
-          fontsize = 35;
+          fontsize = 32;
 
         return GestureDetector(
           onTapDown: (t) {
@@ -82,13 +90,18 @@ class _WordState extends State<Word> with SingleTickerProviderStateMixin {
             },
             child: ScaleTransition(
               scale: animation,
-              child: Text(
-                widget.word,
-                style: GoogleFonts.pacifico(
-                  fontSize: fontsize,
-                  color: color,
-                  fontStyle: FontStyle.normal,
-                  letterSpacing: 5,
+              child: AnimatedOpacity(
+                opacity: opacity,
+                duration: Duration(milliseconds: 300),
+                child: Text(
+                  widget.word,
+                  style: TextStyle(
+                    fontFamily: "Pacifico",
+                    fontSize: fontsize,
+                    color: color,
+                    fontStyle: FontStyle.normal,
+                    letterSpacing: 5,
+                  ),
                 ),
               ),
             ),

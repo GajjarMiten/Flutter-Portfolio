@@ -1,0 +1,237 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:ptf/helper/CustomTheme.dart';
+import 'package:responsive_builder/responsive_builder.dart';
+
+import 'gradient.dart';
+
+class HoverCard extends StatefulWidget {
+  final String image;
+  final String title;
+  final String description;
+
+  HoverCard({
+    @required this.image,
+    @required this.title,
+    @required this.description,
+  });
+  @override
+  _HoverCardState createState() => _HoverCardState();
+}
+
+class _HoverCardState extends State<HoverCard> with customTheme {
+  double height = 300;
+  double cHeight = 300;
+  double width = 400;
+  double cWidth = 400;
+  double titleFontSize = 35;
+  double descriptionFontSize = 18;
+  double sizeBoxHeight = 0;
+  bool tabMobToDesk = false;
+  double imagePadding = 0;
+  double desPaddingLeft = 75;
+  double desPaddingRight = 30;
+
+  final color = (gradient..shuffle()).first;
+
+  Alignment alignment = Alignment.center;
+  MainAxisAlignment axisAlignment = MainAxisAlignment.start;
+
+  final Duration duration = Duration(milliseconds: 700);
+  final Curve curve = Curves.easeInQuad;
+
+  void switchToMobileScreen() {
+    height = 250;
+    width = 300;
+    cHeight = 425;
+    cWidth = 300;
+    alignment = Alignment.topCenter;
+    axisAlignment = MainAxisAlignment.end;
+    descriptionFontSize = 16;
+    titleFontSize = 25;
+    sizeBoxHeight = 270;
+    tabMobToDesk = true;
+    imagePadding = 25.0;
+    desPaddingLeft = 15;
+    desPaddingRight = 15;
+  }
+
+  void switchToTabletScreen() {
+    height = 130;
+    width = 130;
+    cHeight = 300;
+    cWidth = 400;
+    axisAlignment = MainAxisAlignment.end;
+    alignment = Alignment.centerLeft;
+    titleFontSize = 35;
+    descriptionFontSize = 18;
+    tabMobToDesk = true;
+    sizeBoxHeight = 0;
+    imagePadding = 0;
+    desPaddingLeft = 75;
+    desPaddingRight = 30;
+  }
+
+  void switchToDeskropScreen() {
+    height = 300;
+    width = 400;
+    cHeight = 300;
+    cWidth = 400;
+    alignment = Alignment.center;
+    titleFontSize = 35;
+    descriptionFontSize = 18;
+    sizeBoxHeight = 0;
+    tabMobToDesk = false;
+    imagePadding = 0;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ResponsiveBuilder(
+      builder: (context, sizingInformation) {
+        if (tabMobToDesk && sizingInformation.isDesktop) {
+          switchToDeskropScreen();
+        }
+        if (sizingInformation.isTablet) {
+          switchToTabletScreen();
+        } else if (sizingInformation.isMobile) {
+          switchToMobileScreen();
+        }
+
+        return Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: AnimatedContainer(
+            curve: curve,
+            duration: duration,
+            alignment: Alignment.center,
+            height: cHeight + 50,
+            width: cWidth + 130,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                MouseRegion(
+                  onEnter: (event) {
+                    if (sizingInformation.isDesktop) {
+                      setState(() {
+                        alignment = Alignment.centerLeft;
+                        height = 130;
+                        width = 130;
+                      });
+                    }
+                  },
+                  onExit: (event) {
+                    if (sizingInformation.isDesktop) {
+                      setState(() {
+                        alignment = Alignment.center;
+                        height = 300;
+                        width = 400;
+                      });
+                    }
+                  },
+                  child: AnimatedContainer(
+                    curve: curve,
+                    duration: duration,
+                    height: cHeight + 10,
+                    width: cWidth + 10,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: color,
+                      ),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                ),
+                AnimatedContainer(
+                  curve: curve,
+                  duration: duration,
+                  height: cHeight,
+                  width: cWidth,
+                  decoration: BoxDecoration(
+                    color: customTheme.sBgColor,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      AnimatedContainer(
+                        curve: curve,
+                        duration: duration,
+                        height: sizeBoxHeight,
+                      ),
+                      Text(
+                        widget.title,
+                        style: TextStyle(
+                          fontFamily: "pacifico",
+                          fontSize: titleFontSize,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: desPaddingLeft,
+                          right: desPaddingRight,
+                          bottom: 10,
+                        ),
+                        child: Text(
+                          widget.description,
+                          style: TextStyle(
+                            fontFamily: "Acme",
+                            fontSize: descriptionFontSize,
+                            color: customTheme.colorList.last,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      right: 85,
+                      bottom: 35,
+                    ),
+                    child: Icon(
+                      FlutterIcons.github_alt_faw,
+                      size: 25,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: imagePadding),
+                  child: AnimatedAlign(
+                    alignment: alignment,
+                    curve: curve,
+                    duration: duration,
+                    child: AnimatedContainer(
+                      curve: curve,
+                      duration: duration,
+                      height: height,
+                      width: width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: Image.asset(widget.image).image,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  final text = "Lorem ipsum, or lipsum as it is sometimes"
+      " known, is dummy text used in laying out print, "
+      "graphic or web designs. The passage is"
+      " attributed to an unknown typesetter in the 15th century who is thought to have ";
+}
