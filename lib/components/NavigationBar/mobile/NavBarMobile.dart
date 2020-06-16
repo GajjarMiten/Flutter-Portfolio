@@ -32,6 +32,7 @@ class _NavBarMobState extends State<NavBarMob> {
               MyIconButton(
                 icon: FlutterIcons.home_ant,
                 name: "HOME",
+                size: 26,
                 color: (scrollController.getCurrentIndex == 0)
                     ? Theme.of(context).accentColor
                     : Theme.of(context).iconTheme.color,

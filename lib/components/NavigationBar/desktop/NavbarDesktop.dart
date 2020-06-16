@@ -39,6 +39,7 @@ class _NavBarWebState extends State<NavBarWeb> {
               MyIconButton(
                 icon: AntDesign.home,
                 name: "HOME",
+                size: 26,
                 color: (scrollController.getCurrentIndex == 0)
                     ? Theme.of(context).accentColor
                     : Theme.of(context).iconTheme.color,

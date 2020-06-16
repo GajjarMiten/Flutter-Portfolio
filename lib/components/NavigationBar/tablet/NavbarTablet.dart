@@ -36,10 +36,14 @@ class _NavBarTabState extends State<NavBarTab> {
               child: Icon(Icons.account_circle),
             ),
           ),
+          SizedBox(
+            width: 20,
+          ),
           Row(
             children: [
               MyIconButton(
                 icon: AntDesign.home,
+                size: 26,
                 name: "HOME",
                 color: (scrollController.getCurrentIndex == 0)
                     ? Theme.of(context).accentColor
@@ -52,7 +56,7 @@ class _NavBarTabState extends State<NavBarTab> {
                 },
               ),
               SizedBox(
-                height: 10,
+                height: 8,
               ),
               MyIconButton(
                 icon: EvilIcons.user,
@@ -68,7 +72,7 @@ class _NavBarTabState extends State<NavBarTab> {
                 },
               ),
               SizedBox(
-                height: 10,
+                height: 8,
               ),
               MyIconButton(
                 icon: EvilIcons.gear,
@@ -84,7 +88,7 @@ class _NavBarTabState extends State<NavBarTab> {
                 },
               ),
               SizedBox(
-                height: 10,
+                height: 8,
               ),
               MyIconButton(
                 icon: EvilIcons.trophy,
@@ -100,7 +104,7 @@ class _NavBarTabState extends State<NavBarTab> {
                 },
               ),
               SizedBox(
-                height: 10,
+                height: 8,
               ),
               MyIconButton(
                 icon: EvilIcons.envelope,
@@ -126,9 +130,7 @@ class _NavBarTabState extends State<NavBarTab> {
                 icon: EvilIcons.sc_twitter,
                 color: Theme.of(context).iconTheme.color,
                 onHoverColor: Theme.of(context).accentColor,
-              ),
-              SizedBox(
-                height: 5,
+                iconSize: 22,
               ),
               HoverIconButton(
                 onTap: () {
@@ -137,9 +139,7 @@ class _NavBarTabState extends State<NavBarTab> {
                 icon: EvilIcons.sc_linkedin,
                 color: Theme.of(context).iconTheme.color,
                 onHoverColor: Theme.of(context).accentColor,
-              ),
-              SizedBox(
-                height: 5,
+                iconSize: 22,
               ),
               HoverIconButton(
                 onTap: () {
@@ -148,21 +148,16 @@ class _NavBarTabState extends State<NavBarTab> {
                 icon: EvilIcons.sc_telegram,
                 color: Theme.of(context).iconTheme.color,
                 onHoverColor: Theme.of(context).accentColor,
-              ),
-              SizedBox(
-                height: 6,
+                iconSize: 22,
               ),
               HoverIconButton(
                 onTap: () {
                   urlLauncher.launch('https://www.instagram.com/_.mi10._/');
                 },
                 icon: FlutterIcons.instagram_ant,
-                iconSize: 22,
+                iconSize: 20,
                 color: Theme.of(context).iconTheme.color,
                 onHoverColor: Theme.of(context).accentColor,
-              ),
-              SizedBox(
-                height: 6,
               ),
               HoverIconButton(
                 onTap: () {
@@ -171,9 +166,7 @@ class _NavBarTabState extends State<NavBarTab> {
                 icon: EvilIcons.sc_github,
                 color: Theme.of(context).iconTheme.color,
                 onHoverColor: Theme.of(context).accentColor,
-              ),
-              SizedBox(
-                height: 10,
+                iconSize: 22,
               ),
             ],
           ),

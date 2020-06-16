@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-
 class MyIconButton extends StatefulWidget {
   final IconData icon;
+  final double size;
   final String name;
   final Color color;
   final Color onHoverColor;
@@ -12,7 +12,8 @@ class MyIconButton extends StatefulWidget {
       @required this.name,
       @required this.color,
       @required this.onHoverColor,
-      @required this.onTap});
+      @required this.onTap,
+      this.size});
   @override
   _MyIconButtonState createState() => _MyIconButtonState();
 }
@@ -52,6 +53,7 @@ class _MyIconButtonState extends State<MyIconButton> {
                 : Icon(
                     widget.icon,
                     color: widget.color,
+                    size: widget.size,
                   ),
           ),
         ),

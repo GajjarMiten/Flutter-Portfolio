@@ -43,6 +43,9 @@ class _AboutPageState extends State<AboutPage>
 
   MainAxisAlignment mainAxisAlignment = MainAxisAlignment.start;
   double width = 0.5;
+
+  EdgeInsetsGeometry padding = EdgeInsets.only(left: 30);
+
   @override
   void initState() {
     super.initState();
@@ -59,9 +62,6 @@ class _AboutPageState extends State<AboutPage>
         vsync: this, duration: Duration(milliseconds: 2000));
     tweenAnimation = CurvedAnimation(
         parent: tweenAnimController, curve: Curves.easeOutQuart);
-
-    _animation = CurvedAnimation(
-        parent: _controller, curve: Curves.easeIn, reverseCurve: Curves.easeIn);
 
     textAnimController = AnimationController(
         vsync: this, duration: Duration(milliseconds: 30 * myAbout.length));
@@ -85,6 +85,7 @@ class _AboutPageState extends State<AboutPage>
     mainAxisAlignment = MainAxisAlignment.start;
     width = 0.45;
     profileSize = Size(350, 350);
+    padding = EdgeInsets.only(left: 30);
   }
 
   void switchToMobile() {
@@ -95,6 +96,7 @@ class _AboutPageState extends State<AboutPage>
     mainAxisAlignment = MainAxisAlignment.center;
     width = 0.65;
     profileSize = Size(250, 250);
+    padding = EdgeInsets.only(left: 0);
   }
 
   @override
@@ -122,7 +124,7 @@ class _AboutPageState extends State<AboutPage>
           switchToMobile();
         }
         return Container(
-          padding: const EdgeInsets.only(left: 30),
+          padding: padding,
           height: size.height,
           width: size.width,
           child: Stack(
@@ -206,12 +208,12 @@ class _AboutPageState extends State<AboutPage>
   }
 
   String myAbout = "Hey!! I am Miten Gajjar. "
-      " A 20years old Software Engineer powered by VS Code and coffee. "
+      " A 20years old Software Engineer powered by coffee and VS Code. "
       " I am new to community so"
       " I prefer to keep learning, continue challenging myself,"
-      " and do interesting things that matter.\n"
+      " and do interesting things .\n"
       "I am passionate about building excellent "
-      "software that improves the lives of those around me.";
+      "software that improves the lives of peaopl around me.";
 
   Widget myProfile(Size size) => Container(
         width: size.height,

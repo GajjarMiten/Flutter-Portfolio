@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget with customTheme {
           color: Color(0xff181818),
         ),
       ),
+      debugShowCheckedModeBanner: false,
       home: HomePage(),
     );
   }

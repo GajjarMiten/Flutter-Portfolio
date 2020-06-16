@@ -127,13 +127,7 @@ class _SkillPageState extends State<SkillPage>
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       buildTitleColumn(),
-                      SizedBox(
-                        height: 17,
-                      ),
                       buildSkillContainer(context, size),
-                      SizedBox(
-                        height: 17,
-                      ),
                       buildResponsiveBuilder(size),
                     ],
                   ),
@@ -187,8 +181,8 @@ class _SkillPageState extends State<SkillPage>
       builder: (context, sizingInformation) {
         if (sizingInformation.isMobile) {
           return Container(
-            height: size.height*0.45,
-            width: size.width-40,
+            height: size.height * 0.45,
+            width: size.width - 10,
             child: FlipCard(
               flipOnHover: true,
               front: SkillCard(),

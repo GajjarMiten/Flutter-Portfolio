@@ -202,8 +202,8 @@ class _ContactPageState extends State<ContactPage>
     );
   }
 
-  final String info1 = "Wanna get in touch or talk about a project ? "
-      " Feel free to contact me via email at ";
+  final String info1 = "Want to get in touch or talk with me ? "
+      " you can easily contact me via email at ";
   final String email = "iammg26@gmail.com ";
-  final String info2 = "or drop a line in the form!";
+  final String info2 = "or you can drop a message in the form!😃";
 }

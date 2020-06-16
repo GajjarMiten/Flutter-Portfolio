@@ -163,9 +163,8 @@ List<Skill> allSkill = [
   javaScript,
   python,
   nodeJS,
-  typeScript,
   sql
 ];
 List<Skill> skillsetA = [flutter, firebase, python, git];
 List<Skill> skillsetB = [html, css, javaScript];
-List<Skill> skillsetC = [react, nodeJS, typeScript, sql];
+List<Skill> skillsetC = [react, nodeJS, sql];

@@ -3,8 +3,10 @@ import 'package:responsive_builder/responsive_builder.dart';
 
 class Word extends StatefulWidget {
   final String word;
-  final double duration;
-  Word(this.word, {this.duration});
+
+  Word(
+    this.word,
+  );
   @override
   _WordState createState() => _WordState();
 }
@@ -16,9 +18,6 @@ class _WordState extends State<Word> with SingleTickerProviderStateMixin {
   Color color = Colors.white;
 
   double fontsize = 50;
-
-  double opacity = 0;
-  double duration = 0;
 
   @override
   void initState() {
@@ -35,12 +34,6 @@ class _WordState extends State<Word> with SingleTickerProviderStateMixin {
       curve: Curves.elasticInOut,
       reverseCurve: Curves.elasticInOut,
     );
-    duration = (widget.duration) ?? 1;
-    Future.delayed(Duration(milliseconds: 100 * duration.toInt()), () {
-      setState(() {
-        opacity = 1;
-      });
-    });
   }
 
   @override
@@ -90,18 +83,14 @@ class _WordState extends State<Word> with SingleTickerProviderStateMixin {
             },
             child: ScaleTransition(
               scale: animation,
-              child: AnimatedOpacity(
-                opacity: opacity,
-                duration: Duration(milliseconds: 300),
-                child: Text(
-                  widget.word,
-                  style: TextStyle(
-                    fontFamily: "Pacifico",
-                    fontSize: fontsize,
-                    color: color,
-                    fontStyle: FontStyle.normal,
-                    letterSpacing: 5,
-                  ),
+              child: Text(
+                widget.word,
+                style: TextStyle(
+                  fontFamily: "Pacifico",
+                  fontSize: fontsize,
+                  color: color,
+                  fontStyle: FontStyle.normal,
+                  letterSpacing: 5,
                 ),
               ),
             ),
