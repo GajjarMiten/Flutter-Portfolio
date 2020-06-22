@@ -6,6 +6,7 @@ import 'package:ptf/pages/contactPage/contactPage.dart';
 import 'package:ptf/pages/skillPage/skills.dart';
 import 'package:ptf/pages/workpage/workPage.dart';
 import 'package:ptf/provider/ScrollProvider.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -17,30 +18,31 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     final scrollController = Provider.of<ScrollControllerProvider>(context);
-    if (size.width < 950) {
-      setState(() {
-        padding = EdgeInsets.only(top: 0);
-      });
-    } else {
-      padding = EdgeInsets.only(left: 65);
-    }
-    return Container(
-      margin: padding,
-      child: SingleChildScrollView(
-        physics: NeverScrollableScrollPhysics(),
-        controller: scrollController.getController,
-        child: Column(
-          children: [
-            EntryPage(),
-            AboutPage(),
-            SkillPage(),
-            WorkPage(),
-            ContactPage(),
-          ],
-        ),
-      ),
+    return ResponsiveBuilder(
+      builder: (context, sizingInformation) {
+        if (sizingInformation.isDesktop) {
+          padding = EdgeInsets.only(left: 65);
+        } else {
+          padding = EdgeInsets.only(left: 0);
+        }
+        return Container(
+          margin: padding,
+          child: SingleChildScrollView(
+            physics: NeverScrollableScrollPhysics(),
+            controller: scrollController.getController,
+            child: Column(
+              children: [
+                EntryPage(),
+                AboutPage(),
+                SkillPage(),
+                WorkPage(),
+                ContactPage(),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

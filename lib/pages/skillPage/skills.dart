@@ -33,17 +33,15 @@ class _SkillPageState extends State<SkillPage>
   void initState() {
     super.initState();
     _controller = AnimationController(
-        vsync: this,
-        duration: Duration(
-          milliseconds: 3500,
-        ),
-        reverseDuration: Duration(
-          seconds: 1,
-        ));
+      vsync: this,
+      duration: Duration(
+        milliseconds: 2000,
+      ),
+    );
     _animation = CurvedAnimation(
         parent: _controller,
         curve: Curves.easeInOut,
-        reverseCurve: Curves.easeIn);
+      );
     tweenAnimController = AnimationController(
         vsync: this, duration: Duration(milliseconds: 2000));
     tweenAnimation = CurvedAnimation(
@@ -115,16 +113,21 @@ class _SkillPageState extends State<SkillPage>
                       top: 70, bottom: 25, left: 10, right: 10),
                   child: FadeTransition(
                     opacity: _animation,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SlideTransition(
-                          position: tweenAnimation.drive(titleTween),
-                          child: buildTitle(),
-                        ),
-                        buildSkillContainer(context, size),
-                        buildResponsiveBuilder(size),
-                      ],
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 30,
+                          ),
+                          SlideTransition(
+                            position: tweenAnimation.drive(titleTween),
+                            child: buildTitle(),
+                          ),
+                          buildSkillContainer(context, size),
+                          buildResponsiveBuilder(size),
+                        ],
+                      ),
                     ),
                   ),
                 );
@@ -208,6 +211,6 @@ class _SkillPageState extends State<SkillPage>
       "Android application development.\n"
       "I can build small and medium cross-platform application with Flutter and"
       "can desig & build websites and web-apps from scratch using web technologies "
-      "like ReactJS and NodeJS. Have proper knowlege of version controll and git.\n"
+      "like ReactJS and NodeJS. Have proper knowlege of version controll and git."
       "Currently gaining experience by creating and designing application and websites";
 }

@@ -47,7 +47,7 @@ class _AboutPageState extends State<AboutPage>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 3),
+      duration: Duration(seconds: 2),
     );
     _animation = CurvedAnimation(
       parent: _controller,

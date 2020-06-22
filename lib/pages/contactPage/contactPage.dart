@@ -160,7 +160,7 @@ class _ContactPageState extends State<ContactPage>
                             SlideTransition(
                               position: tweenAnimation2.drive(tween),
                               child: Container(
-                                width: size.width * 0.5,
+                                width: size.width * 0.4,
                                 child: Text.rich(
                                   TextSpan(
                                     children: [
@@ -194,9 +194,6 @@ class _ContactPageState extends State<ContactPage>
                             SizedBox(
                               height: 20,
                             ),
-                            (sizingInformation.isMobile)
-                                ? buildContactRow(context)
-                                : Container(),
                           ],
                         ),
                       ),
@@ -210,6 +207,9 @@ class _ContactPageState extends State<ContactPage>
                     child: Footer(),
                   ),
                 ),
+                (sizingInformation.isMobile)
+                    ? buildContactRow(context)
+                    : Container(),
               ],
             ),
           ),
@@ -219,66 +219,71 @@ class _ContactPageState extends State<ContactPage>
   }
 
   Widget buildContactRow(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     Color color = Colors.white.withOpacity(0.5);
-    return Container(
-      width: MediaQuery.of(context).size.width / 2,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          HoverIconButton(
-            onTap: () {
-              urlLauncher.launch('https://twitter.com/GajjarMiten');
-            },
-            icon: EvilIcons.sc_twitter,
-            color: color,
-            onHoverColor: Theme.of(context).accentColor,
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          HoverIconButton(
-            onTap: () {
-              urlLauncher.launch('https://www.linkedin.com/in/mitengajjar');
-            },
-            icon: EvilIcons.sc_linkedin,
-            color: color,
-            onHoverColor: Theme.of(context).accentColor,
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          HoverIconButton(
-            onTap: () {
-              urlLauncher.launch('https://t.me/mit_26');
-            },
-            icon: EvilIcons.sc_telegram,
-            color: color,
-            onHoverColor: Theme.of(context).accentColor,
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          HoverIconButton(
-            onTap: () {
-              urlLauncher.launch('https://www.instagram.com/_.mi10._/');
-            },
-            icon: FlutterIcons.instagram_ant,
-            iconSize: 22,
-            color: color,
-            onHoverColor: Theme.of(context).accentColor,
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          HoverIconButton(
-            onTap: () {
-              urlLauncher.launch('https://github.com/GajjarMiten');
-            },
-            icon: EvilIcons.sc_github,
-            color: color,
-            onHoverColor: Theme.of(context).accentColor,
-          ),
-        ],
+    return Positioned(
+      left: size.width*0.25,
+      bottom: 80,
+      child: Container(
+        width: size.width / 2,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            HoverIconButton(
+              onTap: () {
+                urlLauncher.launch('https://twitter.com/GajjarMiten');
+              },
+              icon: EvilIcons.sc_twitter,
+              color: color,
+              onHoverColor: Theme.of(context).accentColor,
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            HoverIconButton(
+              onTap: () {
+                urlLauncher.launch('https://www.linkedin.com/in/mitengajjar');
+              },
+              icon: EvilIcons.sc_linkedin,
+              color: color,
+              onHoverColor: Theme.of(context).accentColor,
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            HoverIconButton(
+              onTap: () {
+                urlLauncher.launch('https://t.me/mit_26');
+              },
+              icon: EvilIcons.sc_telegram,
+              color: color,
+              onHoverColor: Theme.of(context).accentColor,
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            HoverIconButton(
+              onTap: () {
+                urlLauncher.launch('https://www.instagram.com/_.mi10._/');
+              },
+              icon: FlutterIcons.instagram_ant,
+              iconSize: 22,
+              color: color,
+              onHoverColor: Theme.of(context).accentColor,
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            HoverIconButton(
+              onTap: () {
+                urlLauncher.launch('https://github.com/GajjarMiten');
+              },
+              icon: EvilIcons.sc_github,
+              color: color,
+              onHoverColor: Theme.of(context).accentColor,
+            ),
+          ],
+        ),
       ),
     );
   }
