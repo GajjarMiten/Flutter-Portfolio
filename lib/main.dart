@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ptf/helper/CustomTheme.dart';
-
 
 import 'homePage.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget with customTheme {
   @override
@@ -21,6 +23,7 @@ class MyApp extends StatelessWidget with customTheme {
         ),
       ),
       debugShowCheckedModeBanner: false,
+      title: "Miten Gajjar",
       home: HomePage(),
     );
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 Future buildShowGeneralDialog(BuildContext context, String response) {
   return showGeneralDialog(
@@ -27,7 +27,10 @@ Future buildShowGeneralDialog(BuildContext context, String response) {
       return Dialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
-          side: BorderSide(color: Colors.white,width: 2,),
+          side: BorderSide(
+            color: Colors.white,
+            width: 2,
+          ),
         ),
         backgroundColor: Colors.transparent,
         elevation: 5,
@@ -40,7 +43,7 @@ Future buildShowGeneralDialog(BuildContext context, String response) {
           ),
           child: Text(
             response,
-            style: GoogleFonts.aBeeZee(fontSize: 20),
+            style: TextStyle(fontSize: 20, fontFamily: "Acme"),
           ),
         ),
       );

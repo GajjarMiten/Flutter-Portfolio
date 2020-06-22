@@ -27,11 +27,6 @@ class _SkillPageState extends State<SkillPage>
   AnimationController tweenAnimController;
   Animation<double> tweenAnimation;
 
-  // text animation
-  Animation<int> textAnim;
-  AnimationController textAnimController;
-  String visibleString = "";
-
   double offset;
 
   @override
@@ -53,18 +48,13 @@ class _SkillPageState extends State<SkillPage>
         vsync: this, duration: Duration(milliseconds: 2000));
     tweenAnimation = CurvedAnimation(
         parent: tweenAnimController, curve: Curves.easeOutQuart);
-
-    textAnimController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 30 * myAbout.length));
-    textAnim = StepTween(begin: 0, end: myAbout.length + 8)
-        .animate(textAnimController);
   }
 
   @override
   void dispose() {
     _controller.dispose();
     tweenAnimController.dispose();
-    textAnimController.dispose();
+
     super.dispose();
   }
 
@@ -79,7 +69,6 @@ class _SkillPageState extends State<SkillPage>
       if (offset > (maxOffset / 2) - 190 && offset < (maxOffset / 2) + 50) {
         _controller.forward();
         tweenAnimController.forward();
-        textAnimController.forward();
       }
     });
     return Container(
@@ -98,21 +87,22 @@ class _SkillPageState extends State<SkillPage>
                     children: [
                       buildSkillContainer(context, size),
                       Align(
-                        alignment: Alignment.centerRight,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 105.0),
-                          child: Container(
-                            width: size.width * 0.6,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SlideTransition(
-                                  position: tweenAnimation.drive(titleTween),
-                                  child: buildTitleColumn(),
-                                ),
-                                buildResponsiveBuilder(size),
-                              ],
-                            ),
+                        alignment: Alignment(0.8, 0.0),
+                        child: Container(
+                          width: size.width * 0.45,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 250),
+                              SlideTransition(
+                                position: tweenAnimation.drive(titleTween),
+                                child: buildTitle(),
+                              ),
+                              SizedBox(
+                                height: 35,
+                              ),
+                              buildResponsiveBuilder(size),
+                            ],
                           ),
                         ),
                       ),
@@ -123,13 +113,19 @@ class _SkillPageState extends State<SkillPage>
                 return Padding(
                   padding: const EdgeInsets.only(
                       top: 70, bottom: 25, left: 10, right: 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      buildTitleColumn(),
-                      buildSkillContainer(context, size),
-                      buildResponsiveBuilder(size),
-                    ],
+                  child: FadeTransition(
+                    opacity: _animation,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SlideTransition(
+                          position: tweenAnimation.drive(titleTween),
+                          child: buildTitle(),
+                        ),
+                        buildSkillContainer(context, size),
+                        buildResponsiveBuilder(size),
+                      ],
+                    ),
                   ),
                 );
               }
@@ -140,43 +136,22 @@ class _SkillPageState extends State<SkillPage>
     );
   }
 
-  Column buildTitleColumn() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+  Widget buildTitle() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Word("S"),
-            Word("k"),
-            Word("i"),
-            Word("l"),
-            Word("l"),
-            Word("s"),
-            Word(" "),
-            Word("&"),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Word("E"),
-            Word("x"),
-            Word("p"),
-            Word("e"),
-            Word("r"),
-            Word("i"),
-            Word("e"),
-            Word("n"),
-            Word("c"),
-            Word("e"),
-          ],
-        ),
+        Word("S"),
+        Word("k"),
+        Word("i"),
+        Word("l"),
+        Word("l"),
+        Word("s"),
+        Word(" "),
       ],
     );
   }
 
-  buildSkillContainer(BuildContext context, Size size) {
+  Widget buildSkillContainer(BuildContext context, Size size) {
     return ResponsiveBuilder(
       builder: (context, sizingInformation) {
         if (sizingInformation.isMobile) {
@@ -192,7 +167,7 @@ class _SkillPageState extends State<SkillPage>
         } else {
           return Container(
             height: size.height * 0.6,
-            width: size.width * 0.5,
+            width: size.width * 0.45,
             child: FlipCard(
               flipOnHover: true,
               front: SkillCard(),
@@ -208,74 +183,31 @@ class _SkillPageState extends State<SkillPage>
     return ResponsiveBuilder(
       builder: (context, sizingInformation) {
         double fSize = 17;
-
-        if (sizingInformation.isMobile) {
-          return Container(
-            alignment: Alignment.center,
-            width: size.width,
-            child: AnimatedBuilder(
-              animation: textAnimController,
-              builder: (BuildContext context, Widget child) {
-                if (textAnim.value == 0) {
-                  visibleString = "";
-                } else if (textAnim.value > myAbout.length) {
-                  if ((textAnim.value - myAbout.length) % 2 == 0) {
-                    visibleString = myAbout.substring(0, myAbout.length) + '_';
-                  } else {
-                    visibleString = myAbout.substring(0, myAbout.length);
-                  }
-                } else {
-                  visibleString = myAbout.substring(0, textAnim.value) + '_';
-                }
-                return Text(
-                  visibleString,
-                  style: TextStyle(
-                    fontFamily: "Acme",
-                    color: customTheme.textColor,
-                    fontSize: fSize,
-                  ),
-                );
-              },
-            ),
-          );
+        if (sizingInformation.isDesktop || sizingInformation.isTablet) {
+          fSize = 18;
         } else {
-          return Container(
-            height: size.height * 0.6,
-            width: size.width * 0.35,
-            child: AnimatedBuilder(
-              animation: textAnimController,
-              builder: (BuildContext context, Widget child) {
-                if (textAnim.value == 0) {
-                  visibleString = "";
-                } else if (textAnim.value > myAbout.length) {
-                  if ((textAnim.value - myAbout.length) % 2 == 0) {
-                    visibleString = myAbout.substring(0, myAbout.length) + '_';
-                  } else {
-                    visibleString = myAbout.substring(0, myAbout.length);
-                  }
-                } else {
-                  visibleString = myAbout.substring(0, textAnim.value) + '_';
-                }
-                return Text(
-                  visibleString,
-                  style: TextStyle(
-                    fontFamily: "Acme",
-                    color: customTheme.textColor,
-                    fontSize: fSize,
-                  ),
-                );
-              },
-            ),
-          );
+          fSize = 16;
         }
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Text(
+            mySkills,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: "Acme",
+              color: customTheme.textColor,
+              fontSize: fSize,
+            ),
+          ),
+        );
       },
     );
   }
 
-  String myAbout = "The main area of my expertise is "
+  String mySkills = "The main area of my expertise is "
       "Android application development.\n"
-      "I can build small and medium cross-platform application with Flutter\n"
-      "I can desig & build websites and web-apps from scratch using web technologies "
+      "I can build small and medium cross-platform application with Flutter and"
+      "can desig & build websites and web-apps from scratch using web technologies "
       "like ReactJS and NodeJS. Have proper knowlege of version controll and git.\n"
       "Currently gaining experience by creating and designing application and websites";
 }

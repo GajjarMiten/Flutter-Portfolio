@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 class Footer extends StatelessWidget {
   @override
@@ -14,7 +14,7 @@ class Footer extends StatelessWidget {
               TextSpan(text: "Powerd by "),
             ],
           ),
-          style: GoogleFonts.aBeeZee(fontSize: 18),
+          style: TextStyle(fontSize: 18, fontFamily: "Acme"),
         ),
         FlutterLogo(),
       ],

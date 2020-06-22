@@ -42,38 +42,41 @@ class _SkillButtonState extends State<SkillButton> {
           fontSize = 11;
         }
 
-        return Container(
-          height: height,
-          width: width,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [
-              BoxShadow(
-                offset: Offset(0, 10),
-                blurRadius: 20,
-                color: Colors.black45,
-              )
-            ],
-            gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: widget.gradient),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                widget.name,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: fontSize,
+        return Opacity(
+          opacity: 0.8,
+          child: Container(
+            height: height,
+            width: width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(0, 10),
+                  blurRadius: 20,
+                  color: Colors.black45,
+                )
+              ],
+              gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: widget.gradient),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  widget.name,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: fontSize,
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 8,
-              ),
-              widget.icon,
-            ],
+                SizedBox(
+                  width: 8,
+                ),
+                widget.icon,
+              ],
+            ),
           ),
         );
       },

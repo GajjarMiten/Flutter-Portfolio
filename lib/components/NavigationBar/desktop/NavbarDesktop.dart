@@ -31,7 +31,7 @@ class _NavBarWebState extends State<NavBarWeb> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              child: Icon(Icons.account_circle),
+              child: Image.asset("assets/prf.png",scale:0.5)
             ),
           ),
           Column(

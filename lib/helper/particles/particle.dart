@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import 'package:responsive_builder/responsive_builder.dart';
+
 class Particle extends StatefulWidget {
   final double height;
   final double width;
@@ -102,30 +104,40 @@ class _ParticleState extends State<Particle> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: MouseRegion(
-        onHover: (event) {
-          setState(() {
-            pointerOffset = event.position;
-          });
-        },
-        child: GestureDetector(
-          onPanUpdate: (event) {
-            // setState(() {
-            //   pointerOffset = event.globalPosition;
-            // });
-          },
-          child: CustomPaint(
-            child: Container(),
-            painter: MyPainter(
-              offsets,
-              pointerOffset,
-              randomSize,
-              randomOpacity,
+    return ResponsiveBuilder(
+      builder: (context, sizingInformation) {
+        if (sizingInformation.isMobile) {
+          controller.stop();
+        } else {
+          controller.repeat();
+        }
+
+        return Container(
+          child: MouseRegion(
+            onHover: (event) {
+              setState(() {
+                pointerOffset = event.position;
+              });
+            },
+            child: GestureDetector(
+              onPanUpdate: (event) {
+                // setState(() {
+                //   pointerOffset = event.globalPosition;
+                // });
+              },
+              child: CustomPaint(
+                child: Container(),
+                painter: MyPainter(
+                  offsets,
+                  pointerOffset,
+                  randomSize,
+                  randomOpacity,
+                ),
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

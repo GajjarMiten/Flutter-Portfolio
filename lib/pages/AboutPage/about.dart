@@ -27,10 +27,6 @@ class _AboutPageState extends State<AboutPage>
 
   AnimationController tweenAnimController;
   Animation<double> tweenAnimation;
-  // text animation
-  Animation<int> textAnim;
-  AnimationController textAnimController;
-  String visibleString = "";
 
   double offset;
 
@@ -39,9 +35,9 @@ class _AboutPageState extends State<AboutPage>
 
   Alignment textAlignment = Alignment.bottomLeft;
   Alignment profileAlignment = Alignment.topRight;
-  TextAlign textAlign = TextAlign.start;
+  TextAlign textAlign = TextAlign.center;
 
-  MainAxisAlignment mainAxisAlignment = MainAxisAlignment.start;
+  MainAxisAlignment mainAxisAlignment = MainAxisAlignment.center;
   double width = 0.5;
 
   EdgeInsetsGeometry padding = EdgeInsets.only(left: 30);
@@ -62,38 +58,38 @@ class _AboutPageState extends State<AboutPage>
         vsync: this, duration: Duration(milliseconds: 2000));
     tweenAnimation = CurvedAnimation(
         parent: tweenAnimController, curve: Curves.easeOutQuart);
-
-    textAnimController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 30 * myAbout.length));
-    textAnim = StepTween(begin: 0, end: myAbout.length + 8)
-        .animate(textAnimController);
   }
 
   @override
   void dispose() {
     _controller.dispose();
     tweenAnimController.dispose();
-    textAnimController.dispose();
+
     super.dispose();
   }
 
-  void switchToDesktopTablet() {
+  void switchToDesktop() {
     fSize = 18;
-    textAlignment = Alignment.bottomLeft;
-    profileAlignment = Alignment(0.8, -0.35);
-    textAlign = TextAlign.start;
-    mainAxisAlignment = MainAxisAlignment.start;
-    width = 0.45;
+    textAlignment = Alignment(-0.6, 1);
+    profileAlignment = Alignment(0.8, -0.45);
+    width = 0.4;
     profileSize = Size(350, 350);
     padding = EdgeInsets.only(left: 30);
+  }
+
+  void switchToTab() {
+    fSize = 18;
+    textAlignment = Alignment(-0.7, 1);
+    profileAlignment = Alignment(0.8, -0.25);
+    width = 0.4;
+    profileSize = Size(310, 310);
+    padding = EdgeInsets.only(left: 15);
   }
 
   void switchToMobile() {
     fSize = 16;
     textAlignment = Alignment.center;
-    textAlign = TextAlign.center;
     profileAlignment = Alignment(0, 0.6);
-    mainAxisAlignment = MainAxisAlignment.center;
     width = 0.65;
     profileSize = Size(250, 250);
     padding = EdgeInsets.only(left: 0);
@@ -113,13 +109,14 @@ class _AboutPageState extends State<AboutPage>
         _controller.forward();
 
         tweenAnimController.forward();
-        textAnimController.forward();
       }
     });
     return ResponsiveBuilder(
       builder: (context, sizingInformation) {
-        if (sizingInformation.isDesktop || sizingInformation.isTablet) {
-          switchToDesktopTablet();
+        if (sizingInformation.isDesktop) {
+          switchToDesktop();
+        } else if (sizingInformation.isTablet) {
+          switchToTab();
         } else {
           switchToMobile();
         }
@@ -137,7 +134,7 @@ class _AboutPageState extends State<AboutPage>
                   child: Container(
                     alignment: Alignment.center,
                     height: size.height * 0.7,
-                    width: size.width * width,
+                    width: size.width * width + 30,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -160,34 +157,15 @@ class _AboutPageState extends State<AboutPage>
                         SizedBox(
                           height: 30,
                         ),
-                        AnimatedBuilder(
-                          animation: textAnimController,
-                          builder: (BuildContext context, Widget child) {
-                            if (textAnim.value == 0) {
-                              visibleString = "";
-                            } else if (textAnim.value > myAbout.length) {
-                              if ((textAnim.value - myAbout.length) % 2 == 0) {
-                                visibleString =
-                                    myAbout.substring(0, myAbout.length) + '_';
-                              } else {
-                                visibleString =
-                                    myAbout.substring(0, myAbout.length);
-                              }
-                            } else {
-                              visibleString =
-                                  myAbout.substring(0, textAnim.value) + '_';
-                            }
-                            return Text(
-                              visibleString,
-                              textAlign: textAlign,
-                              style: TextStyle(
-                                fontFamily: "Acme",
-                                color: customTheme.textColor,
-                                fontSize: fSize,
-                              ),
-                            );
-                          },
-                        ),
+                        Text(
+                          myAbout,
+                          textAlign: textAlign,
+                          style: TextStyle(
+                            fontFamily: "Acme",
+                            color: customTheme.textColor,
+                            fontSize: fSize,
+                          ),
+                        )
                       ],
                     ),
                   ),

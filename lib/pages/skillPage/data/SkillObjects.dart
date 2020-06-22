@@ -116,18 +116,6 @@ final Skill javaScript = Skill(
   ],
 );
 
-final Skill typeScript = Skill(
-  icon: Icon(
-    FlutterIcons.language_typescript_mco,
-    color: Colors.white,
-  ),
-  name: "TypeScript",
-  gradient: [
-    Color(0xff7474BF),
-    Color(0xff348AC7),
-  ],
-);
-
 final Skill react = Skill(
   icon: Icon(
     FlutterIcons.react_faw5d,

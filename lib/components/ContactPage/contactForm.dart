@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ptf/provider/emailDataProvider.dart';
@@ -25,10 +27,13 @@ class _ContactFormState extends State<ContactForm> {
         } else if (sizingInformation.isTablet) {
           size = 0.5;
         } else if (sizingInformation.isMobile) {
-          size = 0.6;
+          size = 0.8;
         }
 
         return Form(
+          onWillPop: () {
+            return Future.value(true);
+          },
           key: _formKey,
           child: SizedBox(
             width: MediaQuery.of(context).size.width * size,
@@ -41,6 +46,7 @@ class _ContactFormState extends State<ContactForm> {
                       child: TextFormField(
                         onSaved: (newValue) {
                           emailData.name = newValue;
+                           FocusScope.of(context).unfocus();
                         },
                         validator: (value) {
                           if (value.isEmpty)
@@ -121,7 +127,7 @@ class _ContactFormState extends State<ContactForm> {
                   onSaved: (newValue) {
                     emailData.message = newValue;
                   },
-                  maxLines: 5,
+                  maxLines: (sizingInformation.isMobile) ? 3 : 5,
                   style: TextStyle(
                     color: Color(0xff898989),
                   ),

@@ -26,6 +26,8 @@ class _WorkPageState extends State<WorkPage> with TickerProviderStateMixin {
   Animation<double> _animation;
   AnimationController _controller;
 
+  bool animateCard = false;
+
   @override
   void initState() {
     super.initState();
@@ -63,6 +65,9 @@ class _WorkPageState extends State<WorkPage> with TickerProviderStateMixin {
           offset < (maxOffset * 0.75) + 50) {
         tweenAnimController.forward();
         _controller.forward();
+        setState(() {
+          animateCard = true;
+        });
       }
     });
     return Container(
@@ -101,21 +106,29 @@ class _WorkPageState extends State<WorkPage> with TickerProviderStateMixin {
                       image: "assets/cat.png",
                       title: title,
                       description: description,
+                      time: 1,
+                      animate: animateCard,
                     ),
                     HoverCard(
                       image: "assets/cat.png",
                       title: title,
                       description: description,
+                      time: 2,
+                      animate: animateCard,
                     ),
                     HoverCard(
                       image: "assets/cat.png",
                       title: title,
                       description: description,
+                      time: 3,
+                      animate: animateCard,
                     ),
                     HoverCard(
                       image: "assets/cat.png",
                       title: title,
                       description: description,
+                      time: 4,
+                      animate: animateCard,
                     ),
                   ],
                 ),

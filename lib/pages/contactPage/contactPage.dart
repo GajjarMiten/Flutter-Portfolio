@@ -1,12 +1,15 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+
 import 'package:provider/provider.dart';
 import 'package:ptf/components/AnimatedString/latter.dart';
+import 'package:ptf/components/buttons/HoverIconButton.dart';
 import 'package:ptf/helper/CustomTheme.dart';
 import 'package:ptf/helper/particles/particle.dart';
 import 'package:ptf/provider/ScrollProvider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 
 import '../../components/ContactPage/footer.dart';
 import '../../provider/emailDataProvider.dart';
@@ -91,119 +94,197 @@ class _ContactPageState extends State<ContactPage>
           fSize = 15;
         }
 
-        return Container(
-          alignment: Alignment.center,
-          height: size.height,
-          width: size.width,
-          child: Stack(
-            children: [
-              Particle(size.height, size.width),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: SineWave(
-                  size: Size(size.width, 130),
-                  xOffset: 0,
-                  yOffset: 0,
-                  color: Colors.red,
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Opacity(
-                  opacity: 0.9,
-                  child: CosWave(
+        return GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Container(
+            alignment: Alignment.center,
+            height: size.height,
+            width: size.width,
+            child: Stack(
+              children: [
+                Particle(size.height, size.width),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: SineWave(
                     size: Size(size.width, 130),
-                    xOffset: 45,
-                    yOffset: -5,
+                    xOffset: 0,
+                    yOffset: 0,
+                    color: Colors.red,
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: FadeTransition(
-                    opacity: _animation,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SlideTransition(
-                          position: tweenAnimation.drive(tween),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Word("C"),
-                              Word("o"),
-                              Word("n"),
-                              Word("t"),
-                              Word("a"),
-                              Word("c"),
-                              Word("t"),
-                              Word(" "),
-                              Word("m"),
-                              Word("e"),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 25,
-                        ),
-                        SlideTransition(
-                          position: tweenAnimation2.drive(tween),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            child: Text.rich(
-                              TextSpan(
-                                children: [
-                                  TextSpan(text: info1),
-                                  TextSpan(
-                                    text: email,
-                                    style: GoogleFonts.acme(
-                                      color: customTheme.accentColor,
-                                    ),
-                                  ),
-                                  TextSpan(text: info2),
-                                ],
-                              ),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: "Acme",
-                                color: customTheme.textColor,
-                                fontSize: fSize,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        ChangeNotifierProvider<EmailData>(
-                          create: (context) => EmailData(),
-                          child: ContactForm(),
-                        ),
-                      ],
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Opacity(
+                    opacity: 0.9,
+                    child: CosWave(
+                      size: Size(size.width, 130),
+                      xOffset: 45,
+                      yOffset: -5,
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 15.0),
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Footer(),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: FadeTransition(
+                      opacity: _animation,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SlideTransition(
+                              position: tweenAnimation.drive(tween),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Word("C"),
+                                  Word("o"),
+                                  Word("n"),
+                                  Word("t"),
+                                  Word("a"),
+                                  Word("c"),
+                                  Word("t"),
+                                  Word(" "),
+                                  Word("M"),
+                                  Word("e"),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            SlideTransition(
+                              position: tweenAnimation2.drive(tween),
+                              child: Container(
+                                width: size.width * 0.5,
+                                child: Text.rich(
+                                  TextSpan(
+                                    children: [
+                                      TextSpan(text: info1),
+                                      TextSpan(
+                                        text: email,
+                                        style: TextStyle(
+                                          fontFamily: "Acme",
+                                          color: customTheme.accentColor,
+                                        ),
+                                      ),
+                                      TextSpan(text: info2),
+                                    ],
+                                  ),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: "Acme",
+                                    color: customTheme.textColor,
+                                    fontSize: fSize,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            ChangeNotifierProvider<EmailData>(
+                              create: (context) => EmailData(),
+                              child: ContactForm(),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            (sizingInformation.isMobile)
+                                ? buildContactRow(context)
+                                : Container(),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 15.0),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Footer(),
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },
     );
   }
 
-  final String info1 = "Want to get in touch or talk with me ? "
-      " you can easily contact me via email at ";
+  Widget buildContactRow(BuildContext context) {
+    Color color = Colors.white.withOpacity(0.5);
+    return Container(
+      width: MediaQuery.of(context).size.width / 2,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          HoverIconButton(
+            onTap: () {
+              urlLauncher.launch('https://twitter.com/GajjarMiten');
+            },
+            icon: EvilIcons.sc_twitter,
+            color: color,
+            onHoverColor: Theme.of(context).accentColor,
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          HoverIconButton(
+            onTap: () {
+              urlLauncher.launch('https://www.linkedin.com/in/mitengajjar');
+            },
+            icon: EvilIcons.sc_linkedin,
+            color: color,
+            onHoverColor: Theme.of(context).accentColor,
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          HoverIconButton(
+            onTap: () {
+              urlLauncher.launch('https://t.me/mit_26');
+            },
+            icon: EvilIcons.sc_telegram,
+            color: color,
+            onHoverColor: Theme.of(context).accentColor,
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          HoverIconButton(
+            onTap: () {
+              urlLauncher.launch('https://www.instagram.com/_.mi10._/');
+            },
+            icon: FlutterIcons.instagram_ant,
+            iconSize: 22,
+            color: color,
+            onHoverColor: Theme.of(context).accentColor,
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          HoverIconButton(
+            onTap: () {
+              urlLauncher.launch('https://github.com/GajjarMiten');
+            },
+            icon: EvilIcons.sc_github,
+            color: color,
+            onHoverColor: Theme.of(context).accentColor,
+          ),
+        ],
+      ),
+    );
+  }
+
+  final String info1 = "Have any question or want to talk with me ? "
+      " you can easily connect with me via email at ";
   final String email = "iammg26@gmail.com ";
-  final String info2 = "or you can drop a message in the form!😃";
+  final String info2 = "or feel free to drop a message in the form!😃";
 }

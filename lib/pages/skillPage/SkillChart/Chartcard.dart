@@ -38,10 +38,11 @@ class _ChartCardState extends State<ChartCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.all(60),
       decoration: BoxDecoration(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(20),
-      ),
+      ),   padding: const EdgeInsets.all(15),
       child: BarChart(
         BarChartData(
           borderData: FlBorderData(show: false),

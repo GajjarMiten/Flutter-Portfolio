@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ptf/helper/AlertBanner.dart';
@@ -22,16 +23,15 @@ class _SendState extends State<Send> with customTheme {
       onTap: () {
         if (form.validate()) {
           form.save();
-
-          // Firestore.instance.collection("messages").document().setData(
-          //   {
-          //     "name": emailData.name,
-          //     "email": emailData.email,
-          //     "subject": emailData.subject,
-          //     "message": emailData.message,
-          //     "time": DateTime.now(),
-          //   },
-          // );
+          Firestore.instance.collection("messages").document().setData(
+            {
+              "name": emailData.name,
+              "email": emailData.email,
+              "subject": emailData.subject,
+              "message": emailData.message,
+              "time": DateTime.now(),
+            },
+          );
 
           buildShowGeneralDialog(context, "Message sent!😄");
         }
