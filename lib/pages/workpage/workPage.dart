@@ -5,6 +5,8 @@ import 'package:ptf/components/workPage/cardHover/HoverCard.dart';
 import 'package:ptf/helper/particles/particle.dart';
 import 'package:ptf/provider/ScrollProvider.dart';
 
+import 'works.dart';
+
 class WorkPage extends StatefulWidget {
   @override
   _WorkPageState createState() => _WorkPageState();
@@ -101,36 +103,17 @@ class _WorkPageState extends State<WorkPage> with TickerProviderStateMixin {
               child: Center(
                 child: Wrap(
                   direction: Axis.horizontal,
-                  children: [
-                    HoverCard(
-                      image: "assets/cat.png",
-                      title: title,
-                      description: description,
-                      time: 1,
+                  children: List.generate(
+                    projectList.length,
+                    (index) => HoverCard(
+                      image: projectList[index].image,
+                      title: projectList[index].title,
+                      description: projectList[index].description,
+                      time: index + 1,
                       animate: animateCard,
+                      githubURL: projectList[index].githubURL,
                     ),
-                    HoverCard(
-                      image: "assets/cat.png",
-                      title: title,
-                      description: description,
-                      time: 2,
-                      animate: animateCard,
-                    ),
-                    HoverCard(
-                      image: "assets/cat.png",
-                      title: title,
-                      description: description,
-                      time: 3,
-                      animate: animateCard,
-                    ),
-                    HoverCard(
-                      image: "assets/cat.png",
-                      title: title,
-                      description: description,
-                      time: 4,
-                      animate: animateCard,
-                    ),
-                  ],
+                  ).toList(),
                 ),
               ),
             ),

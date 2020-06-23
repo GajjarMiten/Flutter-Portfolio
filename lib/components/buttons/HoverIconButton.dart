@@ -40,13 +40,10 @@ class _HoverIconButtonState extends State<HoverIconButton> {
         },
         child: Theme(
           data: Theme.of(context),
-          child: Container(
-            alignment: Alignment.center,
-            child: Icon(
-              widget.icon,
-              color: (isHover) ? widget.onHoverColor : widget.color,
-              size: (widget.iconSize == null)?30:widget.iconSize,
-            ),
+          child: Icon(
+            widget.icon,
+            color: (isHover) ? widget.onHoverColor : widget.color,
+            size: (widget.iconSize == null)?30:widget.iconSize,
           ),
         ),
       ),

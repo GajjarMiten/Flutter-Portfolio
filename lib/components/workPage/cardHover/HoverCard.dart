@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:ptf/components/buttons/HoverIconButton.dart';
 import 'package:ptf/helper/CustomTheme.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 
 import 'gradient.dart';
 
@@ -11,6 +13,7 @@ class HoverCard extends StatefulWidget {
   final String description;
   final int time;
   final bool animate;
+  final String githubURL;
 
   HoverCard({
     @required this.image,
@@ -18,6 +21,7 @@ class HoverCard extends StatefulWidget {
     @required this.description,
     @required this.time,
     @required this.animate,
+    @required this.githubURL,
   });
   @override
   _HoverCardState createState() => _HoverCardState();
@@ -58,7 +62,7 @@ class _HoverCardState extends State<HoverCard>
     tabMobToDesk = true;
     imagePadding = 25.0;
     desPaddingLeft = 15;
-    desPaddingRight = 15;
+    desPaddingRight = 35;
   }
 
   void switchToTabletScreen() {
@@ -208,6 +212,7 @@ class _HoverCardState extends State<HoverCard>
                       child: FadeTransition(
                         opacity: _animation,
                         child: SingleChildScrollView(
+                          physics: BouncingScrollPhysics(),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -234,12 +239,15 @@ class _HoverCardState extends State<HoverCard>
                                   right: desPaddingRight,
                                   bottom: 10,
                                 ),
-                                child: Text(
-                                  widget.description,
-                                  style: TextStyle(
-                                    fontFamily: "Acme",
-                                    fontSize: descriptionFontSize,
-                                    color: customTheme.colorList.last,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: Text(
+                                    widget.description,
+                                    style: TextStyle(
+                                      fontFamily: "Acme",
+                                      fontSize: descriptionFontSize,
+                                      color: customTheme.colorList.last,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -252,12 +260,14 @@ class _HoverCardState extends State<HoverCard>
                       alignment: Alignment.bottomRight,
                       child: Padding(
                         padding: const EdgeInsets.only(
-                          right: 85,
-                          bottom: 35,
+                          right: 75,
+                          bottom: 30,
                         ),
-                        child: Icon(
-                          FlutterIcons.github_alt_faw,
-                          size: 25,
+                        child: HoverIconButton(
+                          icon: FlutterIcons.github_alt_faw,
+                          color: Colors.white60,
+                          onHoverColor: customTheme.accentColor,
+                          onTap: () => urlLauncher.launch(widget.githubURL),
                         ),
                       ),
                     ),
@@ -291,9 +301,4 @@ class _HoverCardState extends State<HoverCard>
       },
     );
   }
-
-  final text = "Lorem ipsum, or lipsum as it is sometimes"
-      " known, is dummy text used in laying out print, "
-      "graphic or web designs. The passage is"
-      " attributed to an unknown typesetter in the 15th century who is thought to have ";
 }
