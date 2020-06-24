@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:provider/provider.dart';
 import 'package:ptf/components/buttons/HoverIconButton.dart';
 import 'package:ptf/helper/CustomTheme.dart';
+import 'package:ptf/helper/FadeAnimationWidget.dart';
+import 'package:ptf/helper/SlideAnimation.dart';
+import 'package:ptf/provider/ScrollProvider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 
@@ -27,8 +31,7 @@ class HoverCard extends StatefulWidget {
   _HoverCardState createState() => _HoverCardState();
 }
 
-class _HoverCardState extends State<HoverCard>
-    with customTheme, TickerProviderStateMixin {
+class _HoverCardState extends State<HoverCard> with customTheme {
   double height = 300;
   double cHeight = 300;
   double width = 400;
@@ -95,53 +98,8 @@ class _HoverCardState extends State<HoverCard>
     desPaddingLeft = 80;
   }
 
-  // profile animation
-  final Tween<Offset> tween =
-      Tween<Offset>(begin: Offset(0, 0.5), end: Offset(0, 0));
-
-  AnimationController tweenAnimController;
-  Animation<double> tweenAnimation;
-
-  // opacity animtion
-  Animation<double> _animation;
-  AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    tweenAnimController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 2000));
-    tweenAnimation = CurvedAnimation(
-        parent: tweenAnimController, curve: Curves.easeOutQuart);
-    _controller = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 2),
-    );
-    _animation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeIn,
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    tweenAnimController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    if (widget.animate) {
-      Future.delayed(
-        Duration(milliseconds: 200 * widget.time),
-        () {
-          tweenAnimController.forward();
-          _controller.forward();
-        },
-      );
-    }
-
     return ResponsiveBuilder(
       builder: (context, sizingInformation) {
         if (tabMobToDesk && sizingInformation.isDesktop) {
@@ -155,11 +113,15 @@ class _HoverCardState extends State<HoverCard>
 
         return Padding(
           padding: const EdgeInsets.all(10.0),
-          child: FadeTransition(
-            opacity: _animation,
-            child: SlideTransition(
-              position: tweenAnimation.drive(tween),
-              child: AnimatedContainer(
+          child: FadeAnimatedWidget(
+            waitTime: widget.time.toDouble(),
+            fraction: 4 / 3,
+            widget: SlideAnimatedWidget(
+              begin: Offset(0, 0.5),
+              end: Offset(0, 0),
+              fraction: 4 / 3,
+              waitTime: widget.time.toDouble(),
+              widget: AnimatedContainer(
                 curve: curve,
                 duration: duration,
                 alignment: Alignment.center,
@@ -209,9 +171,9 @@ class _HoverCardState extends State<HoverCard>
                         color: customTheme.sBgColor,
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child: FadeTransition(
-                        opacity: _animation,
-                        child: SingleChildScrollView(
+                      child: FadeAnimatedWidget(
+                        fraction: 4 / 3,
+                        widget: SingleChildScrollView(
                           physics: BouncingScrollPhysics(),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,

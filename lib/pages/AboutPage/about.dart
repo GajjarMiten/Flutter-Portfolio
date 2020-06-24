@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ptf/helper/CustomTheme.dart';
+import 'package:ptf/helper/FadeAnimationWidget.dart';
+import 'package:ptf/helper/SlideAnimation.dart';
 import 'package:ptf/helper/particles/particle.dart';
 import 'package:ptf/components/AnimatedString/latter.dart';
 import 'package:ptf/provider/ScrollProvider.dart';
@@ -11,24 +13,8 @@ class AboutPage extends StatefulWidget {
   _AboutPageState createState() => _AboutPageState();
 }
 
-class _AboutPageState extends State<AboutPage>
-    with TickerProviderStateMixin, customTheme {
-  // title text animation
-  final Tween<Offset> titleTween =
-      Tween<Offset>(begin: Offset(0, 1), end: Offset(0, 0));
-
-  // opacity animtion
-  Animation<double> _animation;
-  AnimationController _controller;
-
-  // profile animation
-  final Tween<Offset> tween =
-      Tween<Offset>(begin: Offset(1, 0.2), end: Offset(0, 0.2));
-
-  AnimationController tweenAnimController;
-  Animation<double> tweenAnimation;
-
-  double offset;
+class _AboutPageState extends State<AboutPage> with customTheme {
+  final double fraction = 4;
 
   double fSize = 18;
   Size profileSize = Size(350, 350);
@@ -41,32 +27,6 @@ class _AboutPageState extends State<AboutPage>
   double width = 0.5;
 
   EdgeInsetsGeometry padding = EdgeInsets.only(left: 30);
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 2),
-    );
-    _animation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeIn,
-    );
-
-    tweenAnimController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 2000));
-    tweenAnimation = CurvedAnimation(
-        parent: tweenAnimController, curve: Curves.easeOutQuart);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    tweenAnimController.dispose();
-
-    super.dispose();
-  }
 
   void switchToDesktop() {
     fSize = 18;
@@ -98,19 +58,7 @@ class _AboutPageState extends State<AboutPage>
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final scrollController = Provider.of<ScrollControllerProvider>(context);
 
-    scrollController.getController.addListener(() {
-      offset = scrollController.getController.offset;
-
-      final maxOffset = scrollController.getController.position.maxScrollExtent;
-
-      if (offset > (maxOffset / 4) - 190 && offset < (maxOffset / 4) + 50) {
-        _controller.forward();
-
-        tweenAnimController.forward();
-      }
-    });
     return ResponsiveBuilder(
       builder: (context, sizingInformation) {
         if (sizingInformation.isDesktop) {
@@ -129,18 +77,18 @@ class _AboutPageState extends State<AboutPage>
               Particle(size.height, size.width),
               Align(
                 alignment: textAlignment,
-                child: FadeTransition(
-                  opacity: _animation,
-                  child: Container(
+                child: FadeAnimatedWidget(
+                  widget: Container(
                     alignment: Alignment.center,
                     height: size.height * 0.7,
                     width: size.width * width + 30,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SlideTransition(
-                          position: tweenAnimation.drive(titleTween),
-                          child: Row(
+                        SlideAnimatedWidget(
+                          begin: Offset(0, 0.4),
+                          end: Offset(0, 0),
+                          widget: Row(
                             mainAxisAlignment: mainAxisAlignment,
                             children: [
                               Word("A"),
@@ -153,6 +101,7 @@ class _AboutPageState extends State<AboutPage>
                               Word("e"),
                             ],
                           ),
+                          fraction: fraction,
                         ),
                         SizedBox(
                           height: 30,
@@ -169,13 +118,16 @@ class _AboutPageState extends State<AboutPage>
                       ],
                     ),
                   ),
+                  fraction: fraction,
                 ),
               ),
               Align(
                 alignment: profileAlignment,
-                child: SlideTransition(
-                  position: tweenAnimation.drive(tween),
-                  child: myProfile(profileSize),
+                child: SlideAnimatedWidget(
+                  widget: myProfile(profileSize),
+                  fraction: fraction,
+                  begin: Offset(1, 0.2),
+                  end: Offset(0, 0.2),
                 ),
               ),
             ],

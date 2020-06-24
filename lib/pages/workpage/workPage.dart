@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ptf/components/AnimatedString/latter.dart';
 import 'package:ptf/components/workPage/cardHover/HoverCard.dart';
+import 'package:ptf/helper/FadeAnimationWidget.dart';
+import 'package:ptf/helper/SlideAnimation.dart';
 import 'package:ptf/helper/particles/particle.dart';
 import 'package:ptf/provider/ScrollProvider.dart';
 
@@ -13,9 +15,8 @@ class WorkPage extends StatefulWidget {
 }
 
 class _WorkPageState extends State<WorkPage> with TickerProviderStateMixin {
-  final String title = "Animal Adoption App";
-  final String description = "Lorem ipsum, or lipsum as it is sometimes";
   final String page = "Projects";
+  final double fraction = 4 / 3;
 
   Axis axis = Axis.horizontal;
   EdgeInsetsGeometry padding = EdgeInsets.all(30);
@@ -57,32 +58,20 @@ class _WorkPageState extends State<WorkPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final scrollController = Provider.of<ScrollControllerProvider>(context);
-    scrollController.getController.addListener(() {
-      offset = scrollController.getController.offset;
 
-      final maxOffset = scrollController.getController.position.maxScrollExtent;
-
-      if (offset > (maxOffset * 0.75) - 190 &&
-          offset < (maxOffset * 0.75) + 50) {
-        tweenAnimController.forward();
-        _controller.forward();
-        setState(() {
-          animateCard = true;
-        });
-      }
-    });
     return Container(
       height: size.height,
       width: size.width,
       child: Stack(
         children: [
           Particle(size.height, size.width),
-          SlideTransition(
-            position: tweenAnimation.drive(tween),
-            child: FadeTransition(
-              opacity: _animation,
-              child: Padding(
+          SlideAnimatedWidget(
+            begin: Offset(0, 0.5),
+            end: Offset(0, 0),
+            fraction: fraction,
+            widget: FadeAnimatedWidget(
+              fraction: fraction,
+              widget: Padding(
                 padding: const EdgeInsets.only(top: 65.0, right: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,

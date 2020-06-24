@@ -2,38 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ptf/provider/ScrollProvider.dart';
 
-class SlideAnimatedWidget extends StatefulWidget {
+class FadeAnimatedWidget extends StatefulWidget {
   final Widget widget;
   final double fraction;
-  final Offset begin;
-  final Offset end;
   final double waitTime;
-  SlideAnimatedWidget({
+  FadeAnimatedWidget({
     @required this.widget,
     @required this.fraction,
-    @required this.begin,
-    @required this.end,
     this.waitTime,
   });
 
   @override
-  _SlideAnimatedWidgetState createState() => _SlideAnimatedWidgetState();
+  _FadeAnimatedWidgetState createState() => _FadeAnimatedWidgetState();
 }
 
-class _SlideAnimatedWidgetState extends State<SlideAnimatedWidget>
+class _FadeAnimatedWidgetState extends State<FadeAnimatedWidget>
     with SingleTickerProviderStateMixin {
-  Tween<Offset> tween;
   Animation animation;
   AnimationController controller;
   double waitTime;
-
   @override
   void initState() {
     super.initState();
     controller =
         AnimationController(vsync: this, duration: Duration(seconds: 2));
-    animation = CurvedAnimation(parent: controller, curve: Curves.easeOutQuart);
-    tween = Tween<Offset>(begin: widget.begin, end: widget.end);
+    animation = CurvedAnimation(parent: controller, curve: Curves.easeInQuad);
     waitTime = (widget.waitTime) ?? 0;
   }
 
@@ -62,8 +55,8 @@ class _SlideAnimatedWidgetState extends State<SlideAnimatedWidget>
         );
       }
     });
-    return SlideTransition(
-      position: animation.drive(tween),
+    return FadeTransition(
+      opacity: animation,
       child: widget.widget,
     );
   }

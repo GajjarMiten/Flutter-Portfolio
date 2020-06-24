@@ -6,8 +6,10 @@ import 'package:provider/provider.dart';
 import 'package:ptf/components/AnimatedString/latter.dart';
 import 'package:ptf/components/buttons/HoverIconButton.dart';
 import 'package:ptf/helper/CustomTheme.dart';
+import 'package:ptf/helper/FadeAnimationWidget.dart';
+import 'package:ptf/helper/SlideAnimation.dart';
 import 'package:ptf/helper/particles/particle.dart';
-import 'package:ptf/provider/ScrollProvider.dart';
+
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 
@@ -23,68 +25,11 @@ class ContactPage extends StatefulWidget {
   _ContactPageState createState() => _ContactPageState();
 }
 
-class _ContactPageState extends State<ContactPage>
-    with customTheme, TickerProviderStateMixin {
-  // tween aniamtion
-  final tween = Tween<Offset>(begin: Offset(0, 0.5), end: Offset(0, 0));
-  AnimationController tweenAnimController;
-  Animation<double> tweenAnimation;
-
-  AnimationController tweenAnimController2;
-  Animation<double> tweenAnimation2;
-
-  Animation<double> _animation;
-  AnimationController _controller;
-
-  double offset;
-
-  @override
-  void initState() {
-    super.initState();
-    tweenAnimController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 2000));
-    tweenAnimation = CurvedAnimation(
-        parent: tweenAnimController, curve: Curves.easeOutQuart);
-
-    tweenAnimController2 = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 2300));
-    tweenAnimation2 = CurvedAnimation(
-        parent: tweenAnimController2, curve: Curves.easeOutQuart);
-
-    _controller = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 1200),
-    );
-    _animation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeIn,
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    tweenAnimController.dispose();
-    tweenAnimController2.dispose();
-    super.dispose();
-  }
-
+class _ContactPageState extends State<ContactPage> with customTheme {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final scrollController = Provider.of<ScrollControllerProvider>(context);
 
-    scrollController.getController.addListener(() {
-      offset = scrollController.getController.offset;
-
-      final maxOffset = scrollController.getController.position.maxScrollExtent;
-
-      if (offset >= maxOffset) {
-        _controller.forward();
-        tweenAnimController.forward();
-        tweenAnimController2.forward();
-      }
-    });
     return ResponsiveBuilder(
       builder: (context, sizingInformation) {
         double maxHeight = 90;
@@ -131,20 +76,24 @@ class _ContactPageState extends State<ContactPage>
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 10,),
+                  padding: const EdgeInsets.only(
+                    bottom: 10,
+                  ),
                   child: Align(
                     alignment: Alignment.center,
-                    child: FadeTransition(
-                      opacity: _animation,
-                      child: SingleChildScrollView(
+                    child: FadeAnimatedWidget(
+                      fraction: 1,
+                      widget: SingleChildScrollView(
                         scrollDirection: Axis.vertical,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SlideTransition(
-                              position: tweenAnimation.drive(tween),
-                              child: Row(
+                            SlideAnimatedWidget(
+                              begin: Offset(0, 0.5),
+                              end: Offset(0, 0),
+                              fraction: 1,
+                              widget: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -163,9 +112,11 @@ class _ContactPageState extends State<ContactPage>
                             ),
                             LimitedBox(
                               maxHeight: maxHeight,
-                              child: SlideTransition(
-                                position: tweenAnimation2.drive(tween),
-                                child: Container(
+                              child: SlideAnimatedWidget(
+                                begin: Offset(0, 0.5),
+                                end: Offset(0, 0),
+                                fraction: 1,
+                                widget: Container(
                                   width: size.width * 0.4,
                                   child: Text.rich(
                                     TextSpan(
@@ -191,7 +142,9 @@ class _ContactPageState extends State<ContactPage>
                                 ),
                               ),
                             ),
-                            SizedBox(height: 10,),
+                            SizedBox(
+                              height: 10,
+                            ),
                             ChangeNotifierProvider<EmailData>(
                               create: (context) => EmailData(),
                               child: ContactForm(),
@@ -225,7 +178,7 @@ class _ContactPageState extends State<ContactPage>
     Color color = Colors.white.withOpacity(0.5);
     return Positioned(
       left: size.width * 0.25,
-      bottom: 60,
+      bottom: 50,
       child: Container(
         width: size.width / 2,
         child: Row(

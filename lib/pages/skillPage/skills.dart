@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
 import 'package:ptf/components/SkillPage/SkillCard.dart';
 import 'package:ptf/helper/CustomTheme.dart';
+import 'package:ptf/helper/FadeAnimationWidget.dart';
+import 'package:ptf/helper/SlideAnimation.dart';
 import 'package:ptf/helper/particles/particle.dart';
 import 'package:ptf/components/AnimatedString/latter.dart';
-import 'package:ptf/provider/ScrollProvider.dart';
+
 import 'package:responsive_builder/responsive_builder.dart';
 
 import 'FlipCard/FlipCard.dart';
@@ -15,60 +17,15 @@ class SkillPage extends StatefulWidget {
   _SkillPageState createState() => _SkillPageState();
 }
 
-class _SkillPageState extends State<SkillPage>
-    with customTheme, TickerProviderStateMixin {
-  // opacity Animation
-  Animation<double> _animation;
-  AnimationController _controller;
-
-// tween Animation
-  final Tween<Offset> titleTween =
-      Tween<Offset>(begin: Offset(0, 0.5), end: Offset(0, 0));
-  AnimationController tweenAnimController;
-  Animation<double> tweenAnimation;
+class _SkillPageState extends State<SkillPage> with customTheme {
+  final double fraction = 2;
 
   double offset;
 
   @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: Duration(
-        milliseconds: 2000,
-      ),
-    );
-    _animation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOut,
-    );
-    tweenAnimController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 2000));
-    tweenAnimation = CurvedAnimation(
-        parent: tweenAnimController, curve: Curves.easeOutQuart);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    tweenAnimController.dispose();
-
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final scrollController = Provider.of<ScrollControllerProvider>(context);
     final size = MediaQuery.of(context).size;
-    scrollController.getController.addListener(() {
-      offset = scrollController.getController.offset;
-      final maxOffset = scrollController.getController.position.maxScrollExtent;
 
-      if (offset > (maxOffset / 2) - 190 && offset < (maxOffset / 2) + 50) {
-        _controller.forward();
-        tweenAnimController.forward();
-      }
-    });
     return Container(
       height: size.height,
       width: size.width,
@@ -78,9 +35,8 @@ class _SkillPageState extends State<SkillPage>
           ResponsiveBuilder(
             builder: (context, sizingInformation) {
               if (sizingInformation.isDesktop || sizingInformation.isTablet) {
-                return FadeTransition(
-                  opacity: _animation,
-                  child: Stack(
+                return FadeAnimatedWidget(
+                  widget: Stack(
                     alignment: Alignment.centerLeft,
                     children: [
                       buildSkillContainer(context, size),
@@ -91,9 +47,11 @@ class _SkillPageState extends State<SkillPage>
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SlideTransition(
-                                position: tweenAnimation.drive(titleTween),
-                                child: buildTitle(),
+                              SlideAnimatedWidget(
+                                begin: Offset(0, 0.5),
+                                end: Offset(0, 0),
+                                fraction: fraction,
+                                widget: buildTitle(),
                               ),
                               buildResponsiveBuilder(size),
                             ],
@@ -102,23 +60,26 @@ class _SkillPageState extends State<SkillPage>
                       ),
                     ],
                   ),
+                  fraction: fraction,
                 );
               } else {
                 return Padding(
                   padding: const EdgeInsets.only(
                       top: 70, bottom: 25, left: 10, right: 10),
-                  child: FadeTransition(
-                    opacity: _animation,
-                    child: SingleChildScrollView(
+                  child: FadeAnimatedWidget(
+                    fraction: fraction,
+                    widget: SingleChildScrollView(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           SizedBox(
                             height: 30,
                           ),
-                          SlideTransition(
-                            position: tweenAnimation.drive(titleTween),
-                            child: buildTitle(),
+                          SlideAnimatedWidget(
+                            begin: Offset(0, 0.5),
+                            end: Offset(0, 0),
+                            fraction: fraction,
+                            widget: buildTitle(),
                           ),
                           buildSkillContainer(context, size),
                           buildResponsiveBuilder(size),
