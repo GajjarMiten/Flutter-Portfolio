@@ -87,11 +87,18 @@ class _ContactPageState extends State<ContactPage>
     });
     return ResponsiveBuilder(
       builder: (context, sizingInformation) {
+        double maxHeight = 90;
         double fSize = 18;
-        if (sizingInformation.isDesktop || sizingInformation.isTablet) {
+
+        if (sizingInformation.isDesktop) {
           fSize = 18;
-        } else if (sizingInformation.isMobile) {
+          maxHeight = 80;
+        } else if (sizingInformation.isTablet) {
+          fSize = 18;
+          maxHeight = 110;
+        } else {
           fSize = 15;
+          maxHeight = 120;
         }
 
         return GestureDetector(
@@ -124,7 +131,7 @@ class _ContactPageState extends State<ContactPage>
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
+                  padding: const EdgeInsets.only(bottom: 10,),
                   child: Align(
                     alignment: Alignment.center,
                     child: FadeTransition(
@@ -154,45 +161,40 @@ class _ContactPageState extends State<ContactPage>
                                 ],
                               ),
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            SlideTransition(
-                              position: tweenAnimation2.drive(tween),
-                              child: Container(
-                                width: size.width * 0.4,
-                                child: Text.rich(
-                                  TextSpan(
-                                    children: [
-                                      TextSpan(text: info1),
-                                      TextSpan(
-                                        text: email,
-                                        style: TextStyle(
-                                          fontFamily: "Acme",
-                                          color: customTheme.accentColor,
+                            LimitedBox(
+                              maxHeight: maxHeight,
+                              child: SlideTransition(
+                                position: tweenAnimation2.drive(tween),
+                                child: Container(
+                                  width: size.width * 0.4,
+                                  child: Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        TextSpan(text: info1),
+                                        TextSpan(
+                                          text: email,
+                                          style: TextStyle(
+                                            fontFamily: "Acme",
+                                            color: customTheme.accentColor,
+                                          ),
                                         ),
-                                      ),
-                                      TextSpan(text: info2),
-                                    ],
-                                  ),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontFamily: "Acme",
-                                    color: customTheme.textColor,
-                                    fontSize: fSize,
+                                        TextSpan(text: info2),
+                                      ],
+                                    ),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: "Acme",
+                                      color: customTheme.textColor,
+                                      fontSize: fSize,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 20,
-                            ),
+                            SizedBox(height: 10,),
                             ChangeNotifierProvider<EmailData>(
                               create: (context) => EmailData(),
                               child: ContactForm(),
-                            ),
-                            SizedBox(
-                              height: 20,
                             ),
                           ],
                         ),
@@ -201,7 +203,7 @@ class _ContactPageState extends State<ContactPage>
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 15.0),
+                  padding: const EdgeInsets.only(bottom: 10.0),
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: Footer(),
@@ -222,8 +224,8 @@ class _ContactPageState extends State<ContactPage>
     final size = MediaQuery.of(context).size;
     Color color = Colors.white.withOpacity(0.5);
     return Positioned(
-      left: size.width*0.25,
-      bottom: 80,
+      left: size.width * 0.25,
+      bottom: 60,
       child: Container(
         width: size.width / 2,
         child: Row(

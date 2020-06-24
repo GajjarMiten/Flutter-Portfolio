@@ -73,8 +73,8 @@ class _AboutPageState extends State<AboutPage>
     textAlignment = Alignment(-0.6, 1);
     profileAlignment = Alignment(0.8, -0.45);
     width = 0.4;
-    profileSize = Size(350, 350);
-    padding = EdgeInsets.only(left: 30);
+    profileSize = Size(325, 325);
+    padding = EdgeInsets.only(left: 0);
   }
 
   void switchToTab() {
@@ -82,7 +82,7 @@ class _AboutPageState extends State<AboutPage>
     textAlignment = Alignment(-0.7, 1);
     profileAlignment = Alignment(0.8, -0.25);
     width = 0.4;
-    profileSize = Size(310, 310);
+    profileSize = Size(300, 300);
     padding = EdgeInsets.only(left: 15);
   }
 
@@ -91,7 +91,7 @@ class _AboutPageState extends State<AboutPage>
     textAlignment = Alignment.center;
     profileAlignment = Alignment(0, 0.6);
     width = 0.65;
-    profileSize = Size(250, 250);
+    profileSize = Size(225, 225);
     padding = EdgeInsets.only(left: 0);
   }
 

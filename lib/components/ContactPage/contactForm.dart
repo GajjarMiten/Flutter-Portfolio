@@ -87,7 +87,7 @@ class _ContactFormState extends State<ContactForm> {
                           if (value.isEmpty)
                             return "Email is needed 😬";
                           else if (!isValidEmail)
-                            return "Valid email is also needed";
+                            return "Be sure to add valid email!";
                           else
                             return null;
                         },

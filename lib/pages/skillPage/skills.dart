@@ -39,9 +39,9 @@ class _SkillPageState extends State<SkillPage>
       ),
     );
     _animation = CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeInOut,
-      );
+      parent: _controller,
+      curve: Curves.easeInOut,
+    );
     tweenAnimController = AnimationController(
         vsync: this, duration: Duration(milliseconds: 2000));
     tweenAnimation = CurvedAnimation(
@@ -89,15 +89,11 @@ class _SkillPageState extends State<SkillPage>
                         child: Container(
                           width: size.width * 0.45,
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(height: 250),
                               SlideTransition(
                                 position: tweenAnimation.drive(titleTween),
                                 child: buildTitle(),
-                              ),
-                              SizedBox(
-                                height: 35,
                               ),
                               buildResponsiveBuilder(size),
                             ],

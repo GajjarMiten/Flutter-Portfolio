@@ -19,7 +19,7 @@ final List<Project> projectList = [
   Project(
       image: "assets/projects/tictactoe.png",
       title: "Tic Tac Toe",
-      description: "A simple Tic Tac Toe game using Flutter framework."
+      description: "A simple Tic Tac Toe game made with Flutter framework."
           " Used Bloc pattern for state managment. User can play with human as well as three types of bot. "
           "Difficult level bot uses minimax algorithm for predicting opponents's next move.",
       githubURL: "https://github.com/GajjarMiten/Flutter-tic-tac-toe.git")
