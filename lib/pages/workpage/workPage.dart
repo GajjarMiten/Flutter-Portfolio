@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:ptf/components/AnimatedString/latter.dart';
 import 'package:ptf/components/workPage/cardHover/HoverCard.dart';
 import 'package:ptf/helper/FadeAnimationWidget.dart';
 import 'package:ptf/helper/SlideAnimation.dart';
 import 'package:ptf/helper/particles/particle.dart';
-import 'package:ptf/provider/ScrollProvider.dart';
 
 import 'works.dart';
 
@@ -14,46 +12,16 @@ class WorkPage extends StatefulWidget {
   _WorkPageState createState() => _WorkPageState();
 }
 
-class _WorkPageState extends State<WorkPage> with TickerProviderStateMixin {
+class _WorkPageState extends State<WorkPage> {
   final String page = "Projects";
   final double fraction = 4 / 3;
 
   Axis axis = Axis.horizontal;
   EdgeInsetsGeometry padding = EdgeInsets.all(30);
 
-  final tween = Tween<Offset>(begin: Offset(0, 0.5), end: Offset(0, 0));
-  AnimationController tweenAnimController;
-  Animation<double> tweenAnimation;
   double offset;
 
-  Animation<double> _animation;
-  AnimationController _controller;
-
   bool animateCard = false;
-
-  @override
-  void initState() {
-    super.initState();
-    tweenAnimController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 2000));
-    tweenAnimation = CurvedAnimation(
-        parent: tweenAnimController, curve: Curves.easeOutQuart);
-    _controller = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 1200),
-    );
-    _animation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeIn,
-    );
-  }
-
-  @override
-  void dispose() {
-    tweenAnimController.dispose();
-    _controller.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

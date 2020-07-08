@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:ptf/helper/CustomTheme.dart';
 import 'package:ptf/helper/FadeAnimationWidget.dart';
 import 'package:ptf/helper/SlideAnimation.dart';
 import 'package:ptf/helper/particles/particle.dart';
 import 'package:ptf/components/AnimatedString/latter.dart';
-import 'package:ptf/provider/ScrollProvider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class AboutPage extends StatefulWidget {

@@ -43,7 +43,7 @@ class _ContactPageState extends State<ContactPage> with customTheme {
           maxHeight = 110;
         } else {
           fSize = 15;
-          maxHeight = 120;
+          maxHeight = 130;
         }
 
         return GestureDetector(
@@ -117,7 +117,7 @@ class _ContactPageState extends State<ContactPage> with customTheme {
                                 end: Offset(0, 0),
                                 fraction: 1,
                                 widget: Container(
-                                  width: size.width * 0.4,
+                                  width: size.width * 0.45,
                                   child: Text.rich(
                                     TextSpan(
                                       children: [

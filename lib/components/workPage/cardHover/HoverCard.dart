@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:provider/provider.dart';
 import 'package:ptf/components/buttons/HoverIconButton.dart';
 import 'package:ptf/helper/CustomTheme.dart';
 import 'package:ptf/helper/FadeAnimationWidget.dart';
 import 'package:ptf/helper/SlideAnimation.dart';
-import 'package:ptf/provider/ScrollProvider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:url_launcher/url_launcher.dart' as urlLauncher;
 
