@@ -110,44 +110,44 @@ class _HoverCardState extends State<HoverCard> with customTheme {
         }
 
         return Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: FadeAnimatedWidget(
-            waitTime: widget.time.toDouble(),
-            fraction: 4 / 3,
-            widget: SlideAnimatedWidget(
-              begin: Offset(0, 0.5),
-              end: Offset(0, 0),
-              fraction: 4 / 3,
+          padding: const EdgeInsets.all(0.0),
+          child: MouseRegion(
+            onEnter: (event) {
+              if (sizingInformation.isDesktop) {
+                setState(() {
+                  alignment = Alignment.centerLeft;
+                  height = 130;
+                  width = 130;
+                });
+              }
+            },
+            onExit: (event) {
+              if (sizingInformation.isDesktop) {
+                setState(() {
+                  alignment = Alignment.center;
+                  height = 300;
+                  width = 400;
+                });
+              }
+            },
+            child: FadeAnimatedWidget(
               waitTime: widget.time.toDouble(),
-              widget: AnimatedContainer(
-                curve: curve,
-                duration: duration,
-                alignment: Alignment.center,
-                height: cHeight + 50,
-                width: cWidth + 130,
-                child: Stack(
+              fraction: 4 / 3,
+              widget: SlideAnimatedWidget(
+                begin: Offset(0, 0.5),
+                end: Offset(0, 0),
+                fraction: 4 / 3,
+                waitTime: widget.time.toDouble(),
+                widget: AnimatedContainer(
+                  curve: curve,
+                  duration: duration,
                   alignment: Alignment.center,
-                  children: [
-                    MouseRegion(
-                      onEnter: (event) {
-                        if (sizingInformation.isDesktop) {
-                          setState(() {
-                            alignment = Alignment.centerLeft;
-                            height = 130;
-                            width = 130;
-                          });
-                        }
-                      },
-                      onExit: (event) {
-                        if (sizingInformation.isDesktop) {
-                          setState(() {
-                            alignment = Alignment.center;
-                            height = 300;
-                            width = 400;
-                          });
-                        }
-                      },
-                      child: AnimatedContainer(
+                  height: cHeight + 50,
+                  width: cWidth + 130,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      AnimatedContainer(
                         curve: curve,
                         duration: duration,
                         height: cHeight + 10,
@@ -159,100 +159,100 @@ class _HoverCardState extends State<HoverCard> with customTheme {
                           borderRadius: BorderRadius.circular(15),
                         ),
                       ),
-                    ),
-                    AnimatedContainer(
-                      curve: curve,
-                      duration: duration,
-                      height: cHeight,
-                      width: cWidth,
-                      decoration: BoxDecoration(
-                        color: customTheme.sBgColor,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: FadeAnimatedWidget(
-                        fraction: 4 / 3,
-                        widget: SingleChildScrollView(
-                          physics: BouncingScrollPhysics(),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              AnimatedContainer(
-                                curve: curve,
-                                duration: duration,
-                                height: sizeBoxHeight,
-                              ),
-                              Text(
-                                widget.title,
-                                style: TextStyle(
-                                  fontFamily: "pacifico",
-                                  fontSize: titleFontSize,
-                                  color: Colors.white,
+                      AnimatedContainer(
+                        curve: curve,
+                        duration: duration,
+                        height: cHeight,
+                        width: cWidth,
+                        decoration: BoxDecoration(
+                          color: customTheme.sBgColor,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: FadeAnimatedWidget(
+                          fraction: 4 / 3,
+                          widget: SingleChildScrollView(
+                            physics: BouncingScrollPhysics(),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                AnimatedContainer(
+                                  curve: curve,
+                                  duration: duration,
+                                  height: sizeBoxHeight,
                                 ),
-                              ),
-                              SizedBox(
-                                height: 12,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: desPaddingLeft,
-                                  right: desPaddingRight,
-                                  bottom: 10,
+                                Text(
+                                  widget.title,
+                                  style: TextStyle(
+                                    fontFamily: "pacifico",
+                                    fontSize: titleFontSize,
+                                    color: Colors.white,
+                                  ),
                                 ),
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.vertical,
-                                  child: Text(
-                                    widget.description,
-                                    style: TextStyle(
-                                      fontFamily: "Acme",
-                                      fontSize: descriptionFontSize,
-                                      color: customTheme.colorList.last,
+                                SizedBox(
+                                  height: 12,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    left: desPaddingLeft,
+                                    right: desPaddingRight,
+                                    bottom: 10,
+                                  ),
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.vertical,
+                                    child: Text(
+                                      widget.description,
+                                      style: TextStyle(
+                                        fontFamily: "Acme",
+                                        fontSize: descriptionFontSize,
+                                        color: customTheme.colorList.last,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          right: 75,
-                          bottom: 30,
-                        ),
-                        child: HoverIconButton(
-                          icon: FlutterIcons.github_alt_faw,
-                          color: Colors.white60,
-                          onHoverColor: customTheme.accentColor,
-                          onTap: () => urlLauncher.launch(widget.githubURL),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: imagePadding),
-                      child: AnimatedAlign(
-                        alignment: alignment,
-                        curve: curve,
-                        duration: duration,
-                        child: AnimatedContainer(
-                          curve: curve,
-                          duration: duration,
-                          height: height,
-                          width: width,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: Image.asset(widget.image).image,
+                              ],
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            right: 75,
+                            bottom: 30,
+                          ),
+                          child: HoverIconButton(
+                            icon: FlutterIcons.github_alt_faw,
+                            color: Colors.white60,
+                            onHoverColor: customTheme.accentColor,
+                            onTap: () => urlLauncher.launch(widget.githubURL),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: imagePadding),
+                        child: AnimatedAlign(
+                          alignment: alignment,
+                          curve: curve,
+                          duration: duration,
+                          child: AnimatedContainer(
+                            curve: curve,
+                            duration: duration,
+                            height: height,
+                            width: width,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: Image.asset(widget.image).image,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

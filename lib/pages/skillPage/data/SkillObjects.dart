@@ -30,7 +30,7 @@ class Skill {
 }
 
 final Skill flutter = Skill(
-  icon: FlutterLogo(colors: createMaterialColor(Color(0xffffffff))),
+  icon: FlutterLogo(),
   name: "Flutter",
   gradient: [
     Color(0xff36D1DC),

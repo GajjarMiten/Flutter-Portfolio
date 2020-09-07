@@ -152,7 +152,7 @@ class _AboutPageState extends State<AboutPage> with customTheme {
             alignment: Alignment.centerRight,
             fit: BoxFit.contain,
             image: Image.asset(
-              "assets/me.png",
+              "assets/me.jpg",
               scale: 1,
             ).image,
           ),
