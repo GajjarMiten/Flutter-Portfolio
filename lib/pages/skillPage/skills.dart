@@ -166,7 +166,7 @@ class _SkillPageState extends State<SkillPage> with customTheme {
 
   String mySkills = "The main area of my expertise is "
       "Android application development.\n"
-      "I can build small and medium cross-platform application with Flutter and"
+      "I can build small and medium cross-platform application with Flutter and "
       "can desig & build websites and web-apps from scratch using web technologies "
       "like ReactJS and NodeJS. Have proper knowlege of version controll and git."
       "Currently gaining experience by creating and designing application and websites";
