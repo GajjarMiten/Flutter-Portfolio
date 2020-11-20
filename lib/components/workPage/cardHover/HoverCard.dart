@@ -16,6 +16,7 @@ class HoverCard extends StatefulWidget {
   final int time;
   final bool animate;
   final String githubURL;
+  final String webURL;
 
   HoverCard({
     @required this.image,
@@ -24,6 +25,7 @@ class HoverCard extends StatefulWidget {
     @required this.time,
     @required this.animate,
     @required this.githubURL,
+    @required this.webURL,
   });
   @override
   _HoverCardState createState() => _HoverCardState();
@@ -216,17 +218,38 @@ class _HoverCardState extends State<HoverCard> with customTheme {
                         ),
                       ),
                       Align(
+                        alignment: Alignment(0.8, 1),
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 75, bottom: 30),
+                          child: (widget.webURL.isNotEmpty)
+                              ? Tooltip(
+                                  message: "Website Link",
+                                  child: HoverIconButton(
+                                    icon: FlutterIcons.link_ant,
+                                    color: Colors.white60,
+                                    onHoverColor: customTheme.accentColor,
+                                    onTap: () =>
+                                        urlLauncher.launch(widget.webURL),
+                                  ),
+                                )
+                              : Container(),
+                        ),
+                      ),
+                      Align(
                         alignment: Alignment.bottomRight,
                         child: Padding(
                           padding: const EdgeInsets.only(
                             right: 75,
                             bottom: 30,
                           ),
-                          child: HoverIconButton(
-                            icon: FlutterIcons.github_alt_faw,
-                            color: Colors.white60,
-                            onHoverColor: customTheme.accentColor,
-                            onTap: () => urlLauncher.launch(widget.githubURL),
+                          child: Tooltip(
+                            message: "GitHub Link",
+                            child: HoverIconButton(
+                              icon: FlutterIcons.github_alt_faw,
+                              color: Colors.white60,
+                              onHoverColor: customTheme.accentColor,
+                              onTap: () => urlLauncher.launch(widget.githubURL),
+                            ),
                           ),
                         ),
                       ),

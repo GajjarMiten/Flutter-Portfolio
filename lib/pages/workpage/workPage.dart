@@ -69,6 +69,7 @@ class _WorkPageState extends State<WorkPage> {
                       time: index + 1,
                       animate: animateCard,
                       githubURL: projectList[index].githubURL,
+                      webURL: projectList[index].webURL ?? "",
                     ),
                   ).toList(),
                 ),

@@ -30,9 +30,7 @@ class _NavBarWebState extends State<NavBarWeb> {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Container(
-              child: Image.asset("assets/prf.png",scale:0.5)
-            ),
+            child: Container(child: Image.asset("assets/prf.png", scale: 0.5)),
           ),
           Column(
             children: [
@@ -50,9 +48,6 @@ class _NavBarWebState extends State<NavBarWeb> {
                   scrollController.setCurrentIndex(0);
                 },
               ),
-              SizedBox(
-                height: 10,
-              ),
               MyIconButton(
                 icon: EvilIcons.user,
                 name: "ABOUT",
@@ -65,9 +60,6 @@ class _NavBarWebState extends State<NavBarWeb> {
                       duration: duration, curve: curve);
                   scrollController.setCurrentIndex(1);
                 },
-              ),
-              SizedBox(
-                height: 10,
               ),
               MyIconButton(
                 icon: EvilIcons.gear,
@@ -82,9 +74,6 @@ class _NavBarWebState extends State<NavBarWeb> {
                   scrollController.setCurrentIndex(2);
                 },
               ),
-              SizedBox(
-                height: 10,
-              ),
               MyIconButton(
                 icon: EvilIcons.trophy,
                 name: "WORK",
@@ -97,9 +86,6 @@ class _NavBarWebState extends State<NavBarWeb> {
                       duration: duration, curve: curve);
                   scrollController.setCurrentIndex(3);
                 },
-              ),
-              SizedBox(
-                height: 10,
               ),
               MyIconButton(
                 icon: EvilIcons.envelope,
@@ -120,14 +106,19 @@ class _NavBarWebState extends State<NavBarWeb> {
             children: [
               HoverIconButton(
                 onTap: () {
+                  urlLauncher.launch('https://github.com/GajjarMiten');
+                },
+                icon: EvilIcons.sc_github,
+                color: Theme.of(context).iconTheme.color,
+                onHoverColor: Theme.of(context).accentColor,
+              ),
+              HoverIconButton(
+                onTap: () {
                   urlLauncher.launch('https://twitter.com/GajjarMiten');
                 },
                 icon: EvilIcons.sc_twitter,
                 color: Theme.of(context).iconTheme.color,
                 onHoverColor: Theme.of(context).accentColor,
-              ),
-              SizedBox(
-                height: 5,
               ),
               HoverIconButton(
                 onTap: () {
@@ -138,9 +129,6 @@ class _NavBarWebState extends State<NavBarWeb> {
                 color: Theme.of(context).iconTheme.color,
                 onHoverColor: Theme.of(context).accentColor,
               ),
-              SizedBox(
-                height: 5,
-              ),
               HoverIconButton(
                 onTap: () {
                   urlLauncher.launch('https://t.me/mit_26');
@@ -148,9 +136,6 @@ class _NavBarWebState extends State<NavBarWeb> {
                 icon: EvilIcons.sc_telegram,
                 color: Theme.of(context).iconTheme.color,
                 onHoverColor: Theme.of(context).accentColor,
-              ),
-              SizedBox(
-                height: 6,
               ),
               HoverIconButton(
                 onTap: () {
@@ -160,20 +145,6 @@ class _NavBarWebState extends State<NavBarWeb> {
                 iconSize: 22,
                 color: Theme.of(context).iconTheme.color,
                 onHoverColor: Theme.of(context).accentColor,
-              ),
-              SizedBox(
-                height: 6,
-              ),
-              HoverIconButton(
-                onTap: () {
-                  urlLauncher.launch('https://github.com/GajjarMiten');
-                },
-                icon: EvilIcons.sc_github,
-                color: Theme.of(context).iconTheme.color,
-                onHoverColor: Theme.of(context).accentColor,
-              ),
-              SizedBox(
-                height: 10,
               ),
             ],
           ),
